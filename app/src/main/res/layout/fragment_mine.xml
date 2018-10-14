@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/tourists_avatar"
+                android:layout_marginTop="60dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:text="登录"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="我的关注"
+                android:textColor="@color/comTextColor"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ripple_trans"
+                android:padding="16dp"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@color/comTextColor"
+                    android:text="自动翻译"
+                    android:layout_height="wrap_content" />
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:checked="true"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="开启自动翻译后，帖子的文本信息将会以中文显示。"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="联系我们"
+                android:textColor="@color/comTextColor"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ripple_trans"
+                android:padding="16dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="不显示我的帖子"
+                android:textColor="@color/comTextColor"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ripple_trans"
+                android:padding="16dp"
+                android:layout_height="wrap_content" />
+
+            
+            
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</layout>
