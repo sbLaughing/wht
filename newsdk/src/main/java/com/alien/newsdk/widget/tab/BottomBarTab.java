@@ -33,20 +33,24 @@ public class BottomBarTab extends FrameLayout {
 
     private TextView mTvUnreadCount;
 
-    public BottomBarTab(Context context, @DrawableRes int icon, CharSequence title) {
-        this(context, null, icon, title);
+    public BottomBarTab(Context context, @DrawableRes int icon,CharSequence title) {
+        this(context, null, icon,24, title);
     }
 
-    public BottomBarTab(Context context, AttributeSet attrs, int icon, CharSequence title) {
-        this(context, attrs, 0, icon, title);
+    public BottomBarTab(Context context, @DrawableRes int icon, int iconSize,CharSequence title) {
+        this(context, null, icon,iconSize, title);
     }
 
-    public BottomBarTab(Context context, AttributeSet attrs, int defStyleAttr, int icon, CharSequence title) {
+    public BottomBarTab(Context context, AttributeSet attrs, int icon,int iconSize, CharSequence title) {
+        this(context, attrs, 0, icon, iconSize,title);
+    }
+
+    public BottomBarTab(Context context, AttributeSet attrs, int defStyleAttr, int icon,int iconSize, CharSequence title) {
         super(context, attrs, defStyleAttr);
-        init(context, icon, title);
+        init(context, icon, iconSize,title);
     }
 
-    private void init(Context context, int icon, CharSequence title) {
+    private void init(Context context, int icon,int iconSize ,CharSequence title) {
         unselectRes = icon;
         mContext = context;
         TypedArray typedArray = context.obtainStyledAttributes(new int[]{R.attr.selectableItemBackgroundBorderless});
@@ -62,7 +66,7 @@ public class BottomBarTab extends FrameLayout {
         lLContainer.setLayoutParams(paramsContainer);
 
         mIcon = new ImageView(context);
-        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 22, getResources().getDisplayMetrics());
+        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, iconSize, getResources().getDisplayMetrics());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         mIcon.setImageResource(icon);
         mIcon.setLayoutParams(params);

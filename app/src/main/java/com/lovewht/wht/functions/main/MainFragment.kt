@@ -28,9 +28,9 @@ class MainFragment : WhtFragment<FragmentMainBinding>() {
         setSwipeBackEnable(false)
 
         bottomBar
-                .addItem(BottomBarTab(_mActivity, R.drawable.home_un, null).apply { setSelectRes(R.drawable.home_se) })
-                .addItem(BottomBarTab(_mActivity, R.drawable.find_un, null).apply { setSelectRes(R.drawable.find_se) })
-                .addItem(BottomBarTab(_mActivity, R.drawable.personal_un, null).apply { setSelectRes(R.drawable.personal_se) })
+                .addItem(BottomBarTab(_mActivity, R.drawable.home_un, 32,null).apply { setSelectRes(R.drawable.home_se) })
+                .addItem(BottomBarTab(_mActivity, R.drawable.find_un, 32,null).apply { setSelectRes(R.drawable.find_se) })
+                .addItem(BottomBarTab(_mActivity, R.drawable.personal_un, 32,null).apply { setSelectRes(R.drawable.personal_se) })
         bottomBar.setOnTabSelectedListener(object : BottomBar.OnTabSelectedListener {
             override fun onTabSelected(position: Int, prePosition: Int) {
                 val pf = mFragments[position]

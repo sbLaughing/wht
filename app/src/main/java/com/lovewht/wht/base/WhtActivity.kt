@@ -1,7 +1,9 @@
 package com.lovewht.wht.base
 
 import android.databinding.ViewDataBinding
+import android.os.Bundle
 import com.alien.ksdk.base.SDKActivity
+import com.alien.newsdk.util.StatusBarUtil
 
 /**
  * 描述:
@@ -10,4 +12,8 @@ import com.alien.ksdk.base.SDKActivity
  */
 abstract class WhtActivity<T:ViewDataBinding> : SDKActivity<T>() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        StatusBarUtil.StatusBarLightMode(this@WhtActivity)
+    }
 }

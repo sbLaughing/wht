@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="12dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="52dp"
+                android:layout_height="52dp" />
+            
+            <LinearLayout
+                android:layout_marginLeft="12dp"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Original Name"
+                    android:textColor="@color/comTextColor"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textColor="@android:color/darker_gray"
+                    android:text="userID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/more_menu"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <com.lovewht.wht.functions.video.HomeCoverVedio
+            android:layout_width="match_parent"
+            android:id="@+id/home_cover_vedio"
+            android:layout_height="300dp"/>
+
+        <LinearLayout
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
+                android:layout_width="wrap_content"
+                android:src="@drawable/down"
+                android:id="@+id/download_btn"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
+                android:id="@+id/share_btn"
+                android:layout_width="wrap_content"
+                android:src="@drawable/share"
+                android:layout_height="wrap_content" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:text="30分钟前"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <com.ms.square.android.expandabletextview.ExpandableTextView
+            android:layout_width="match_parent"
+            app:maxCollapsedLines="2"
+            app:animDuration="200"
+            android:id="@+id/expandable_tv_layout"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:textColor="#666666" />
+            <ImageButton
+                android:id="@id/expand_collapse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_gravity="right|bottom"
+                android:background="@android:color/transparent"/>
+        </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+
+    </LinearLayout>
+</layout>

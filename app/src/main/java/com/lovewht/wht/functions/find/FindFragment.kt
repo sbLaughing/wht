@@ -1,5 +1,7 @@
 package com.lovewht.wht.functions.find
 
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentPagerAdapter
 import com.lovewht.wht.R
 import com.lovewht.wht.base.WhtFragment
 import com.lovewht.wht.databinding.FragmentFindBinding
@@ -21,12 +23,24 @@ class FindFragment : WhtFragment<FragmentFindBinding>() {
 
 
     override fun initView() {
+//        tabs.forEach {
+//            tab_layout.addTab(tab_layout.newTab().setText(it))
+//        }
 
 
-        tabs.forEach {
-            tab_layout.addTab(tab_layout.newTab().setText(it))
+        view_pager.adapter = object :FragmentPagerAdapter(childFragmentManager){
+            override fun getItem(position: Int): Fragment {
+                return SubFindFragment.newInstance()
+            }
+
+            override fun getCount(): Int = tabs.size
+
+            override fun getPageTitle(position: Int): CharSequence? {
+                return tabs[position]
+            }
         }
 
+        tab_layout.setupWithViewPager(view_pager)
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_find
