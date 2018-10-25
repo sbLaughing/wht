@@ -17,11 +17,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
  * Created by Alien on 2018/4/25.
  */
 @Keep
-open class BaseDataBindingAdapter<T,V:BaseDataBindingViewHolder>(
+open class BaseDataBindingAdapter<T,V:BaseDataBindingViewHolder<T>>(
         @LayoutRes itemLayoutRes:Int,
         data:List<T>?=null,
-        open val emptyLayoutRes :Int?= null,
-        open val onBinding:(V)->Unit = {})
+        open val emptyLayoutRes :Int?= null)
     : BaseQuickAdapter<T, V>(itemLayoutRes,data) {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -34,7 +33,7 @@ open class BaseDataBindingAdapter<T,V:BaseDataBindingViewHolder>(
         helper.getDataBinding()?.apply {
             setVariable(BR.item,item)
             executePendingBindings()
-            onBinding(helper)
+            helper.onBind(data.indexOf(item),item)
         }
 
         getClickChildIds()?.forEach {

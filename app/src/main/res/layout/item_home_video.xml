@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.inwandou.wandou.functions.video.VideoViewModel"/>
     </data>
 
     <LinearLayout
@@ -48,10 +51,40 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <com.lovewht.wht.functions.video.HomeCoverVedio
-            android:layout_width="match_parent"
-            android:id="@+id/home_cover_vedio"
-            android:layout_height="300dp"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.waynell.videolist.widget.TextureVideoView
+                android:id="@+id/video_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:scaleType="fitCenter"/>
+
+            <ImageView
+                android:id="@+id/video_cover"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="200dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@{item.isMute()?@drawable/silent:@drawable/sound}"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content" />
+
+            <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
+                <!--android:id="@+id/video_progress"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:visibility="invisible"-->
+                <!--app:cpb_background_progressbar_color="@color/white"-->
+                <!--app:cpb_background_progressbar_width="10dp"-->
+                <!--app:cpb_progressbar_color="@color/colorPrimary"-->
+                <!--app:cpb_progressbar_width="10dp" />-->
+        </FrameLayout>
+
 
         <LinearLayout
             android:padding="8dp"

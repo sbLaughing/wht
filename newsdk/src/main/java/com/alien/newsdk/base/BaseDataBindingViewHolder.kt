@@ -12,9 +12,13 @@ import com.chad.library.adapter.base.BaseViewHolder
  * Created by Alien on 2018/4/25.
  */
 @Keep
-open class BaseDataBindingViewHolder(view:View) : BaseViewHolder(view) {
+open class BaseDataBindingViewHolder<T>(view:View) : BaseViewHolder(view) {
 
     fun getDataBinding(): ViewDataBinding? {
         return itemView.getTag(R.id.BaseQuickAdapter_databinding_support) as ViewDataBinding?
+    }
+
+    open fun onBind(position:Int,data:T){
+
     }
 }

@@ -9,8 +9,7 @@ import android.support.annotation.LayoutRes
  */
 open class CommonAdapter <T>(@LayoutRes itemLayoutRes:Int,
                         data:List<T>?=null,
-                        override val emptyLayoutRes :Int?= null,
-                        override val onBinding:(BaseDataBindingViewHolder)->Unit = {})
-    : BaseDataBindingAdapter<T, BaseDataBindingViewHolder>(
-        itemLayoutRes, data, emptyLayoutRes, onBinding
+                        override val emptyLayoutRes :Int?= null)
+    : BaseDataBindingAdapter<T, BaseDataBindingViewHolder<T>>(
+        itemLayoutRes, data, emptyLayoutRes
 )
