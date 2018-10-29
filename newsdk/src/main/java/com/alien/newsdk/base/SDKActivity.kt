@@ -9,12 +9,12 @@ import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity
+import me.yokeyword.fragmentation.SupportActivity
 
 /**
  * Created by Alien on 2017/12/7.
  */
-abstract class SDKActivity<VB : ViewDataBinding> : SwipeBackActivity(){
+abstract class SDKActivity<VB : ViewDataBinding> : SupportActivity(){
 
     protected lateinit var mBinding: VB
     protected lateinit var mContext: Context

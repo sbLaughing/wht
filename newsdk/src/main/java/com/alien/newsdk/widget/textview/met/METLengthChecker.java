@@ -1,4 +1,4 @@
-package com.alien.ksdk.view.textview.met;
+package com.alien.newsdk.widget.textview.met;
 
 /**
  * Created by mariotaku on 15/4/12.

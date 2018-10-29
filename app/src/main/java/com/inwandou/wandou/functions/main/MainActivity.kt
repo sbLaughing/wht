@@ -11,7 +11,6 @@ import com.inwandou.wandou.databinding.ActivityMainBinding
  */
 class MainActivity : WDActivity<ActivityMainBinding>() {
     override fun initView() {
-
         var fragment = findFragment(MainFragment::class.java)
         if (fragment == null) {
             fragment = MainFragment.newInstance()

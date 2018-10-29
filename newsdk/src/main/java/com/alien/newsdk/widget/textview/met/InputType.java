@@ -1,11 +1,13 @@
-package com.alien.ksdk.view.textview.met;
+package com.alien.newsdk.widget.textview.met;
 
 import android.support.annotation.IntDef;
 
-import static com.alien.ksdk.view.textview.met.InputType.captcha;
-import static com.alien.ksdk.view.textview.met.InputType.other;
-import static com.alien.ksdk.view.textview.met.InputType.password;
-import static com.alien.ksdk.view.textview.met.InputType.phone;
+import static com.alien.newsdk.widget.textview.met.InputType.captcha;
+import static com.alien.newsdk.widget.textview.met.InputType.password;
+import static com.alien.newsdk.widget.textview.met.InputType.phone;
+import static com.alien.newsdk.widget.textview.met.InputType.other;
+
+
 
 /**
  * 描述:

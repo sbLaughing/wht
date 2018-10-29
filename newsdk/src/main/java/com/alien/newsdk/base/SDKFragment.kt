@@ -1,4 +1,4 @@
-package com.alien.ksdk.base
+package com.alien.newsdk.base
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -28,7 +28,7 @@ abstract class SDKFragment<VB : ViewDataBinding> : SwipeBackFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), null, false)
-        return mBinding.root
+        return attachToSwipeBack(mBinding.root)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

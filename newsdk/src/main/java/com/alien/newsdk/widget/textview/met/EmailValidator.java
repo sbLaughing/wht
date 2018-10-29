@@ -1,4 +1,4 @@
-package com.alien.ksdk.view.textview.met;
+package com.alien.newsdk.widget.textview.met;
 
 import android.support.annotation.NonNull;
 

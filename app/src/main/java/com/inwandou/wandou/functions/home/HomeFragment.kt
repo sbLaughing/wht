@@ -31,7 +31,7 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
     override fun getLayoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
-
+        setSwipeBackEnable(false)
         val layoutManager = LinearLayoutManager(context)
         recycler_view.layoutManager = layoutManager
 

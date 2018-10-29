@@ -16,4 +16,6 @@ abstract class WDActivity<T:ViewDataBinding> : SDKActivity<T>() {
         super.onCreate(savedInstanceState)
         StatusBarUtil.StatusBarLightMode(this@WDActivity)
     }
+
+
 }

@@ -23,6 +23,8 @@ class FindFragment : WDFragment<FragmentFindBinding>() {
 
 
     override fun initView() {
+        setSwipeBackEnable(false)
+
 //        tabs.forEach {
 //            tab_layout.addTab(tab_layout.newTab().setText(it))
 //        }

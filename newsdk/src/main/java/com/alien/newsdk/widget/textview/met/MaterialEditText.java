@@ -1,4 +1,4 @@
-package com.alien.ksdk.view.textview.met;
+package com.alien.newsdk.widget.textview.met;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -34,8 +34,8 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.alien.ksdk.R;
-import com.alien.ksdk.util.sys.ScreenUtil;
+import com.alien.newsdk.R;
+import com.alien.newsdk.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;

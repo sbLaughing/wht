@@ -23,6 +23,7 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
     override fun getLayoutRes(): Int = R.layout.fragment_simple_list
 
     override fun initView() {
+        setSwipeBackEnable(false)
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
 

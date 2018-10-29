@@ -26,6 +26,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold"
+                android:id="@+id/to_login_tv"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
                 android:text="登录"

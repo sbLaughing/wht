@@ -1,9 +1,8 @@
-package com.alien.ksdk.view.textview.met;
+package com.alien.newsdk.widget.textview.met;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.alien.ksdk.R;
 
 /**
  * 描述:
@@ -14,7 +13,7 @@ import com.alien.ksdk.R;
 public class PhoneValidator extends METValidator {
 
     public PhoneValidator(Context context) {
-        super(context.getString(R.string.phone_length_notright));
+        super("手机号码长度不正确");
     }
 
     @Override

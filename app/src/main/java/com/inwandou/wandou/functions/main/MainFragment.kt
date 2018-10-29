@@ -26,7 +26,6 @@ class MainFragment : WDFragment<FragmentMainBinding>() {
 
     override fun initView() {
         setSwipeBackEnable(false)
-
         bottomBar
                 .addItem(BottomBarTab(_mActivity, R.drawable.home_un, 32,null).apply { setSelectRes(R.drawable.home_se) })
                 .addItem(BottomBarTab(_mActivity, R.drawable.find_un, 32,null).apply { setSelectRes(R.drawable.find_se) })

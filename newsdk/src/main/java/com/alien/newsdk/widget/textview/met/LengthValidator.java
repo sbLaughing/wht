@@ -1,9 +1,8 @@
-package com.alien.ksdk.view.textview.met;
+package com.alien.newsdk.widget.textview.met;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.alien.ksdk.R;
 
 /**
  * 描述:
@@ -14,7 +13,7 @@ import com.alien.ksdk.R;
 public class LengthValidator extends METValidator {
     int len =0;
     public LengthValidator(Context context,int minlen) {
-        super(context.getString(R.string.please_input_here));
+        super("请填写此项");
         this.len = minlen;
     }
 
