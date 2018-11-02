@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/close_btn"
+            android:src="@drawable/shut_down_black"
+            android:padding="12dp"
+            style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:drawableLeft="@drawable/login_weibo"
+            android:text="微博登录"
+            android:textColor="@color/comTextColor"
+            android:textSize="16sp"
+            android:translationZ="6dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            android:drawablePadding="12dp"
+            android:gravity="center"
+            android:background="@drawable/round_white"
+            android:id="@+id/weibo_login_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:paddingLeft="32dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingRight="32dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:drawableLeft="@drawable/login_qq"
+            android:text="QQ登录"
+            android:textColor="@color/comTextColor"
+            android:textSize="16sp"
+            android:translationZ="6dp"
+            android:id="@+id/qq_login_tv"
+            android:layout_below="@id/weibo_login_tv"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            android:drawablePadding="12dp"
+            android:gravity="center"
+            android:background="@drawable/round_white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="32dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingRight="32dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="账号密码登录"
+            android:layout_below="@id/qq_login_tv"
+            android:id="@+id/account_login_tv"
+            android:layout_marginTop="32dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+</layout>

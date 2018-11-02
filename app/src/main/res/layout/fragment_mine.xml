@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="appvm"
+            type="com.inwandou.wandou.models.AppVM"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -29,7 +32,7 @@
                 android:id="@+id/to_login_tv"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
-                android:text="登录"
+                android:text='@{appvm.userInfo.loginShowString}'
                 android:layout_height="wrap_content" />
 
 

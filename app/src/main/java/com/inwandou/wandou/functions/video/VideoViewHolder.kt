@@ -52,18 +52,18 @@ class VideoViewHolder(view: View) : BaseDataBindingViewHolder<VideoViewModel>(vi
 //                .load("http://img10.3lian.com/sc6/show02/67/27/03.jpg")
 ////                .load("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4")
 //                .into(coverView)
-//        GlideApp.with(itemView.context)
-//                .asFile()
-//                .load(data.remotePath)
-//                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
-//                .downloadOnly(loadTarget)
-
-
         GlideApp.with(itemView.context)
-                .asBitmap()
+                .asFile()
                 .load(data.remotePath)
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
-                .into(coverView)
+                .downloadOnly(loadTarget)
+
+
+//        GlideApp.with(itemView.context)
+//                .asBitmap()
+//                .load(data.remotePath)
+//                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
+//                .into(coverView)
 
     }
 

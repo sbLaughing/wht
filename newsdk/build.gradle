@@ -13,8 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -45,6 +43,7 @@ dependencies {
 //    api 'io.reactivex.rxjava2:rxkotlin:2.3.0'
 
     api "io.reactivex.rxjava2:rxjava:2.2.2"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
     //retrofit网络框架
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-gson:2.3.0'

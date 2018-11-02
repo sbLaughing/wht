@@ -15,6 +15,17 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        config {
+            keyAlias 'tzrl'
+            keyPassword 'tzrl207160'
+            storeFile file('/Users/and/Code/tzrl.keystore')
+            storePassword 'tzrl2180160'
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
