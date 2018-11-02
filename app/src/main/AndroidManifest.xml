@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.inwandou.wandou">
+    package="com.lovewandou.wd">
     
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -11,16 +11,16 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="com.inwandou.wandou.WDApp"
+        android:name="com.lovewandou.wd.WDApp"
         android:theme="@style/AppTheme">
-        <activity android:name="com.inwandou.wandou.functions.main.WelcomeActivity">
+        <activity android:name="com.lovewandou.wd.functions.main.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.inwandou.wandou.functions.main.MainActivity" />
+        <activity android:name="com.lovewandou.wd.functions.main.MainActivity" />
     </application>
 
 </manifest>

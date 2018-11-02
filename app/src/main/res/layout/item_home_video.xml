@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.inwandou.wandou.functions.video.VideoViewModel"/>
+            type="com.lovewandou.wd.functions.video.VideoViewModel"/>
     </data>
 
     <LinearLayout

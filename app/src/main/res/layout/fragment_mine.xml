@@ -5,7 +5,7 @@
 
         <variable
             name="appvm"
-            type="com.inwandou.wandou.models.AppVM"/>
+            type="com.lovewandou.wd.models.AppVM"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView

@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.inwandou.wandou.functions.login.LoginVM"/>
+            type="com.lovewandou.wd.functions.login.LoginVM"/>
     </data>
 
     <LinearLayout
