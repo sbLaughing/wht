@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.lovewandou.wd.functions.profile.ProfileVM"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/ripple_trans"
+        android:paddingBottom="10dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="45dp"
+            app:circleAvatar="@{item.userInfo.thumbnail}"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_height="45dp" />
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@{item.userInfo.user_name}"
+                android:textColor="@color/comTextColor"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="123123123"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@{item.userInfo.user_id}"
+                tools:text="123123123"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/comGreyTextColor"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="70dp"
+            android:background="@{item.attend?@drawable/ripple_round_grey:@drawable/ripple_round_accent}"
+            android:gravity="center"
+            tools:text="测试"
+            android:id="@+id/attend_tv"
+            android:text="@{item.curAttendString}"
+            android:layout_marginLeft="15dp"
+            tools:background="@drawable/ripple_round_accent"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+</layout>

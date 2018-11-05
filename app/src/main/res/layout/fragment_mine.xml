@@ -32,7 +32,7 @@
                 android:id="@+id/to_login_tv"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
-                android:text='@{appvm.userInfo.loginShowString}'
+                android:text='@{appvm.accountInfo.loginShowString}'
                 android:layout_height="wrap_content" />
 
 
@@ -41,6 +41,7 @@
                 android:text="我的关注"
                 android:textColor="@color/comTextColor"
                 android:textSize="18sp"
+                android:id="@+id/attends_tv"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/ripple_trans"
                 android:padding="16dp"

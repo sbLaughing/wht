@@ -10,8 +10,13 @@ import com.alien.newsdk.util.ScreenUtil
  */
 class WDApp : Application() {
 
+    companion object {
+        lateinit var context:Application
+    }
+
     override fun onCreate() {
         super.onCreate()
+        context = this@WDApp
         ScreenUtil.init(this)
     }
 }

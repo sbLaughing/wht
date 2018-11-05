@@ -50,14 +50,17 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
 
         mCalculator = SingleListViewItemActiveCalculator(adapter,RecyclerViewItemPositionGetter(layoutManager,recycler_view))
         recycler_view.addOnScrollListener(object :RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
                 mScrollState = newState
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && adapter.itemCount > 0) {
                     mCalculator.onScrollStateIdle()
                 }
             }
 
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
                 mCalculator.onScrolled(mScrollState)
             }
         })

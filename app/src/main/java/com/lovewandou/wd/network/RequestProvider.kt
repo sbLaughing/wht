@@ -1,9 +1,11 @@
 package com.lovewandou.wd.network
 
-import com.alien.newsdk.network.NetManager
-import com.alien.newsdk.network.NetProvider
-import com.alien.newsdk.network.RequestHandler
+import com.alien.newsdk.network.*
 import com.lovewandou.wd.BuildConfig
+import com.lovewandou.wd.models.AppData
+import okhttp3.Interceptor
+import okhttp3.Request
+import okhttp3.Response
 import java.nio.charset.Charset
 
 /**
@@ -25,36 +27,36 @@ object RequestProvider {
             override fun configLogEnable(): Boolean = BuildConfig.DEBUG
 
             override fun configHandler(): RequestHandler? {
-//                return object : DefaultRequestHandler() {
-//                    override fun onBeforeRequest(request: Request, chain: Interceptor.Chain): Request {
-//
-//                        val newrequest = request.newBuilder()
-////                                .addHeader("Accept", "application/json")
-////                                .addHeader("Authorization", "Bearer ${AppData.sTokenCache.accessToken}")
-//                                .addHeader("os", android.os.Build.VERSION.RELEASE)
-//                                .addHeader("device", android.os.Build.MODEL)
-//                                .addHeader("version", BuildConfig.VERSION_NAME)
-//                                .addHeader("versionCode",BuildConfig.VERSION_CODE.toString())
-//                                .build()
-//                        return newrequest
-//                    }
-//
-//                    override fun onAfterRequest(response: Response, chain: Interceptor.Chain): Response {
-//                        if (401 == response.code()) {
-//                            throw ApiConnectExceptioin(response.code(), "登录已过期,请重新登录!")
-//                        } else if (403 == response.code()) {
-//                            throw ApiConnectExceptioin(response.code(), "没有访问权限")
-//                        } else if (404 == response.code()) {
-//                            throw ApiConnectExceptioin(response.code(), "地址不存在")
-//                        } else if (503 == response.code()) {
-//                            throw ApiConnectExceptioin(response.code(), "服务器升级中...")
-//                        } else if (response.code() > 300) {
-//                            throw ApiConnectExceptioin(response.code(), "服务器内部错误")
-//                        }
-//
-//                        return super.onAfterRequest(response, chain)
-//                    }
-//                }
+                return object : DefaultRequestHandler() {
+                    override fun onBeforeRequest(request: Request, chain: Interceptor.Chain): Request {
+
+                        val newrequest = request.newBuilder()
+//                                .addHeader("Accept", "application/json")
+                                .addHeader("token", AppData.token)
+                                .addHeader("os", android.os.Build.VERSION.RELEASE)
+                                .addHeader("device", android.os.Build.MODEL)
+                                .addHeader("version", BuildConfig.VERSION_NAME)
+                                .addHeader("versionCode",BuildConfig.VERSION_CODE.toString())
+                                .build()
+                        return newrequest
+                    }
+
+                    override fun onAfterRequest(response: Response, chain: Interceptor.Chain): Response {
+                        if (401 == response.code()) {
+                            throw ApiConnectExceptioin(response.code(), "登录已过期,请重新登录!")
+                        } else if (403 == response.code()) {
+                            throw ApiConnectExceptioin(response.code(), "没有访问权限")
+                        } else if (404 == response.code()) {
+                            throw ApiConnectExceptioin(response.code(), "地址不存在")
+                        } else if (503 == response.code()) {
+                            throw ApiConnectExceptioin(response.code(), "服务器升级中...")
+                        } else if (response.code() > 300) {
+                            throw ApiConnectExceptioin(response.code(), "服务器内部错误")
+                        }
+
+                        return super.onAfterRequest(response, chain)
+                    }
+                }
                 return null
             }
         })
@@ -63,5 +65,9 @@ object RequestProvider {
 
     val accountRequest by lazy {
         retrofit.create(AccountRequest::class.java)
+    }
+
+    val userRequest by lazy {
+        retrofit.create(UserRequest::class.java)
     }
 }

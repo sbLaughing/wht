@@ -1,4 +1,4 @@
-package com.alien.ksdk.base
+package com.alien.newsdk.base
 
 import android.content.Context
 import android.databinding.DataBindingUtil

@@ -12,7 +12,7 @@ import com.waynell.videolist.visibility.scroll.ItemsProvider
  * Created by and on 2018/10/16.
  */
 open class VedioAdapter(var view: RecyclerView)
-    : BaseDataBindingAdapter<VideoViewModel,VideoViewHolder>(R.layout.item_home_video, listOf(),null),ItemsProvider {
+    : BaseDataBindingAdapter<VideoViewModel,VideoViewHolder>(R.layout.item_home, listOf(),null),ItemsProvider {
     override fun getListItem(position: Int): ListItem? {
         val holder = view.findViewHolderForAdapterPosition(position)
         return if (holder is ListItem) {

@@ -17,6 +17,7 @@
             app:tabIndicatorColor="@android:color/black"
             app:tabTextColor="@android:color/darker_gray"
             app:tabSelectedTextColor="@android:color/black"
+            app:tabMode="scrollable"
             android:id="@+id/tab_layout"
             android:layout_height="wrap_content"/>
 

@@ -1,5 +1,7 @@
 package com.lovewandou.wd.models.data
 
+import java.io.Serializable
+
 /**
  * 描述:
  *
@@ -8,23 +10,23 @@ package com.lovewandou.wd.models.data
 data class LoginResp(
         val token:String="",
         val random:String="",
-        val user:UserInfo = UserInfo()
+        val user:AccountInfo = AccountInfo()
 ):BaseResponse()
 
 
-data class UserInfo(
+data class AccountInfo(
         val mobile:String="",
-        val nickName:String="",
-        val avatar:String="",
+        val user_name:String="",
+        val thumbnail:String="",
         val type:Int=1,
-        val id:String=""
-){
+        val user_id:String=""
+):Serializable{
 
     fun getLoginShowString(): String {
-        return if (isValid()) mobile else "登录"
+        return if (isValid()) user_name else "登录"
     }
 
     fun isValid(): Boolean {
-        return !mobile.isEmpty() && !nickName.isEmpty()
+        return !mobile.isEmpty() && !user_name.isEmpty()
     }
 }

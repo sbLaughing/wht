@@ -3,7 +3,7 @@ package com.lovewandou.wd.models
 import android.databinding.Bindable
 import com.alien.newsdk.base.BaseVM
 import com.lovewandou.wd.BR
-import com.lovewandou.wd.models.data.UserInfo
+import com.lovewandou.wd.models.data.AccountInfo
 
 /**
  * 描述:
@@ -13,10 +13,11 @@ import com.lovewandou.wd.models.data.UserInfo
 class AppVM : BaseVM() {
 
     @Bindable
-    var userInfo:UserInfo = UserInfo()
+    var accountInfo:AccountInfo = (AppData.mCommonCache.getAsObject("accountInfo") as? AccountInfo) ?: AccountInfo()
     set(value) {
         field = value
-        notifyPropertyChanged(BR.userInfo)
+        AppData.mCommonCache.put("accountInfo",field)
+        notifyPropertyChanged(BR.accountInfo)
     }
 
 

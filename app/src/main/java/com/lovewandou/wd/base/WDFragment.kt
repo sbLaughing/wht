@@ -1,6 +1,7 @@
 package com.lovewandou.wd.base
 
 import android.databinding.ViewDataBinding
+import android.os.Bundle
 import com.alien.newsdk.base.SDKFragment
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
@@ -19,6 +20,15 @@ abstract class WDFragment<T:ViewDataBinding> : SDKFragment<T>() {
 
     override fun onCreateFragmentAnimator(): FragmentAnimator {
         return DefaultHorizontalAnimator()
+    }
+
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
+        autoLoad()
+    }
+
+    open fun autoLoad(){
+
     }
 
 }

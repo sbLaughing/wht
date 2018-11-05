@@ -9,7 +9,7 @@ import com.alien.newsdk.network.BaseHttpRespone
  */
 open class BaseResponse(val code:Int=0,val message:String="") : BaseHttpRespone{
 
-    override fun isError(): Boolean = code!=0
+    override fun isError(): Boolean = code == 40
 
     override fun getErroCode(): Int? = code
 

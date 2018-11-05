@@ -1,7 +1,9 @@
 package com.lovewandou.wd.functions.find
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
+import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentFindBinding
@@ -16,33 +18,47 @@ class FindFragment : WDFragment<FragmentFindBinding>() {
 
 
     companion object {
-        val tabs = listOf("推荐","网红","明星","动物","旅游","商业")
-
-        fun newInstance():FindFragment = FindFragment()
+        fun newInstance(): FindFragment = FindFragment()
     }
 
+    val labelsList = mutableListOf<String>()
+    val findVM = FindVM()
 
+    val mFragments = mutableMapOf<Int,SubFindFragment>()
+
+    var mViewPagerAdapter: FragmentStatePagerAdapter? = null
     override fun initView() {
         setSwipeBackEnable(false)
 
-//        tabs.forEach {
-//            tab_layout.addTab(tab_layout.newTab().setText(it))
-//        }
+        mViewPagerAdapter = object : FragmentStatePagerAdapter(childFragmentManager) {
 
 
-        view_pager.adapter = object :FragmentPagerAdapter(childFragmentManager){
             override fun getItem(position: Int): Fragment {
-                return SubFindFragment.newInstance()
+                return SubFindFragment.newInstance(labelsList[position])
             }
 
-            override fun getCount(): Int = tabs.size
+            override fun getCount(): Int {
+                return labelsList.size
+            }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                return tabs[position]
+                return labelsList[position]
             }
         }
-
+        view_pager.adapter = mViewPagerAdapter
         tab_layout.setupWithViewPager(view_pager)
+    }
+
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        super.onLazyInitView(savedInstanceState)
+
+        findVM.getTags()
+                .safeSubscribeBy {
+                    labelsList.clear()
+                    labelsList.addAll(it)
+                    mViewPagerAdapter?.notifyDataSetChanged()
+                }
+
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_find

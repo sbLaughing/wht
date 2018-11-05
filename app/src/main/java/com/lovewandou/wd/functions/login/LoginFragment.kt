@@ -4,7 +4,7 @@ import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentLoginBinding
-import com.lovewandou.wd.models.AppData
+import com.lovewandou.wd.functions.main.MainFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
@@ -28,11 +28,7 @@ class LoginFragment : WDFragment<FragmentLoginBinding>() {
 
         login_tv.setOnClickListener {_->
             vm.login().safeSubscribeBy {
-                AppData.appVM.apply {
-                    userInfo = it.user
-                    notifyChange()
-                }
-                pop()
+                popTo(MainFragment::class.java,false)
             }
         }
 

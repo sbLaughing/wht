@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="ratio" format="float"/>
+    <declare-styleable name="MToolbar">
+        <attr name="mt_title" format="string"/>
+        <attr name="mt_title_center" format="boolean"/>
+    </declare-styleable>
+    <attr name="MToolbarDefaultStyle" format="reference"/>
 
     <declare-styleable name="MaterialEditText">
         <attr name="met_baseColor" format="color" />

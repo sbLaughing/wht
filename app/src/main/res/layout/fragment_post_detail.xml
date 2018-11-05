@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:databinding="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="postvm"
+            type="com.lovewandou.wd.functions.post.PostVM"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.alien.newsdk.widget.toolbar.MToolbar
+            android:layout_width="match_parent"
+            android:id="@+id/tool_bar"
+            android:layout_height="match_parent"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <include layout="@layout/item_home"
+                android:id="@+id/post_layout"
+                databinding:item="@{postvm}"
+                />
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

@@ -2,7 +2,7 @@ package com.lovewandou.wd.base
 
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import com.alien.ksdk.base.SDKActivity
+import com.alien.newsdk.base.SDKActivity
 import com.alien.newsdk.util.StatusBarUtil
 
 /**
