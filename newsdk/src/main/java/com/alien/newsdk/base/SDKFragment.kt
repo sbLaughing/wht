@@ -24,7 +24,7 @@ abstract class SDKFragment<VB : ViewDataBinding> : SwipeBackFragment(){
 
     abstract fun getLayoutRes(): Int
     abstract fun initView()
-    open fun loadData(){}
+    open fun loadData(isLoadmore:Boolean = false){}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = DataBindingUtil.inflate(inflater, getLayoutRes(), null, false)

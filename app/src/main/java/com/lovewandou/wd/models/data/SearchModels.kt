@@ -12,7 +12,7 @@ import com.lovewandou.wd.R
 data class SearchReq(
         val keyword:String?=null,
         val tag:String?=null
-)
+):BaseRequest()
 
 
 
@@ -20,17 +20,20 @@ data class TagsInfo(
         val name:String
 )
 
+
+data class SearchWrapper(val key:String,val result:List<UserInfo>)
+
 data class UserInfo(
         val products: List<UserProductsPreview> = listOf(),
         val user_name: String = "",
-        private var is_attend: Int = 0,
+        private var is_attend: Int? = 0,
         val user_id: String = "",
         val thumbnail: String = ""
 ) : Parcelable {
-
-    fun isAttend():Boolean{
-        return (is_attend==1)
+    fun isAttend(): Boolean {
+        return (is_attend == 1)
     }
+
     fun getIsAttendString(): String {
         return if (is_attend == 1) {
             "已关注"
@@ -39,11 +42,15 @@ data class UserInfo(
         }
     }
 
-    fun cancelAttend(){
+    fun isAttendValid(): Boolean {
+        return is_attend !=null
+    }
+
+    fun cancelAttend() {
         is_attend = 0
     }
 
-    fun addAttend(){
+    fun addAttend() {
         is_attend = 1
     }
 
@@ -73,7 +80,7 @@ data class UserInfo(
     constructor(source: Parcel) : this(
             ArrayList<UserProductsPreview>().apply { source.readList(this, UserProductsPreview::class.java.classLoader) },
             source.readString(),
-            source.readInt(),
+            source.readValue(Int::class.java.classLoader) as Int?,
             source.readString(),
             source.readString()
     )
@@ -83,7 +90,7 @@ data class UserInfo(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeList(products)
         writeString(user_name)
-        writeInt(is_attend)
+        writeValue(is_attend)
         writeString(user_id)
         writeString(thumbnail)
     }

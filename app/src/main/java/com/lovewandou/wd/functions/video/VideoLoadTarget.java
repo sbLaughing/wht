@@ -17,6 +17,7 @@ import java.io.File;
  */
 public class VideoLoadTarget extends ViewTarget<TextureVideoView, File> implements TextureVideoView.MediaPlayerCallback {
 
+    public static final String TAG = "VideoLoadTarget";
 
     private final VideoLoadMvpView mLoadMvpView;
 

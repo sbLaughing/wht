@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/empty_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/empty_content"
+        android:drawablePadding="35dp"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="关注其它用户后，就可以在这里看到他们发布的照片和视频了。"
+        android:textColor="#5e5e5e"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/search_btn"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/round_white"
+        android:drawableLeft="@drawable/home_search"
+        android:drawablePadding="12dp"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="查找用户并关注"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:translationZ="6dp" />
+
+</LinearLayout>

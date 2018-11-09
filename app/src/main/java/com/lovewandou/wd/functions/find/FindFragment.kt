@@ -7,6 +7,7 @@ import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentFindBinding
+import com.lovewandou.wd.functions.search.SearchFragment
 import kotlinx.android.synthetic.main.fragment_find.*
 
 /**
@@ -47,6 +48,10 @@ class FindFragment : WDFragment<FragmentFindBinding>() {
         }
         view_pager.adapter = mViewPagerAdapter
         tab_layout.setupWithViewPager(view_pager)
+        search_bar.setEditEnabled(false)
+        search_bar.setOnClickListener {
+            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(SearchFragment.newInstance())
+        }
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {

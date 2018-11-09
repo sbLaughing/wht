@@ -3,9 +3,10 @@ package com.lovewandou.wd.functions.profile
 import android.databinding.Bindable
 import android.os.Parcel
 import android.os.Parcelable
-import com.alien.newsdk.base.BaseVM
+import android.util.Log
 import com.alien.newsdk.network.async
 import com.alien.newsdk.network.transformData
+import com.lovewandou.wd.base.BaseSkipVM
 import com.lovewandou.wd.models.AppData
 import com.lovewandou.wd.models.data.BaseResponse
 import com.lovewandou.wd.models.data.UserIdReq
@@ -19,7 +20,7 @@ import io.reactivex.Maybe
  *
  * Created by and on 2018/11/4.
  */
-class ProfileVM(val userInfo: UserInfo) : BaseVM(), Parcelable {
+class ProfileVM(var userInfo: UserInfo) : BaseSkipVM(), Parcelable {
     @Bindable
     fun isAttend(): Boolean {
         return userInfo.isAttend()
@@ -31,9 +32,26 @@ class ProfileVM(val userInfo: UserInfo) : BaseVM(), Parcelable {
         else return "关注"
     }
 
+    fun fetchUserInfo(): Maybe<UserInfo> {
+        val req = UserIdReq(user_id = userInfo.user_id)
+
+        return RequestProvider.userRequest.getUserInfo(
+                AppData.mGson.toJson(req))
+                .async()
+                .doOnSuccess {
+                    userInfo = it
+                    notifyChange()
+                }
+    }
+
     fun getUserPosts(userid: String): Maybe<List<UserPostInfo>> {
+        val req = UserIdReq(userid)
+        req.skip = skip
+        req.limit = limit
+
+        Log.e("ProfileVM","skip:$skip")
         return RequestProvider.userRequest
-                .getPostsFromUser(AppData.mGson.toJson(UserIdReq(userid)))
+                .getPostsFromUser(AppData.mGson.toJson(req))
                 .async()
     }
 

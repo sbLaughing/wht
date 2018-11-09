@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View"/>
         <variable
             name="item"
             type="com.lovewandou.wd.functions.post.PostVM"/>
@@ -15,7 +17,14 @@
         <com.alien.newsdk.widget.imageview.RatioImageView
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.post_thumbnail}"
+            app:imageUrl="@{item.userPostInfo.post_thumbnail}"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_margin="6dp"
+            android:src="@drawable/video_logo"
+            android:visibility="@{item.userPostInfo.post_is_video?View.VISIBLE:View.GONE}"
             android:layout_height="wrap_content" />
     </FrameLayout>
 </layout>

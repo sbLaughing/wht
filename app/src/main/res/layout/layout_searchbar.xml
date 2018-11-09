@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout"
+    android:background="@drawable/search_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="0dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:drawablePadding="7dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:clickable="false"
+        android:id="@+id/edit_view"
+        android:hint="输入ins用户id或名字进行搜索"
+        android:textColorHint="@color/comGreyBg"
+        android:textColor="@color/comTextColor"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/search"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/clear_view"
+        android:src="@drawable/shut_down"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:layout_height="match_parent" />
+
+
+
+</merge>

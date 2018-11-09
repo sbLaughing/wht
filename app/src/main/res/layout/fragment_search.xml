@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="12dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+
+            <com.lovewandou.wd.widget.SearchBar
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/search_bar"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="返回"
+                style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
+                android:textColor="@color/comTextColor"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:id="@+id/cancel_btn"
+                android:paddingLeft="12dp"
+                android:paddingRight="16dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/comLineColor"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recycler_view"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/empty_layout"
+                android:background="@android:color/white"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/empty_tv"
+                    tools:text="@string/search_empty_hint"
+                    android:textColor="@color/comTextColor"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="帮我自动关注"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    android:background="@drawable/ripple_trans"
+                    android:textStyle="bold"
+                    android:id="@+id/auto_attend_tv"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+</layout>

@@ -1,6 +1,7 @@
 package com.lovewandou.wd.functions.myAttends
 
 import android.support.v7.widget.LinearLayoutManager
+import com.alien.newsdk.network.async
 import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
@@ -65,6 +66,7 @@ class MyAttendsFragment : WDFragment<FragmentMyAttendsBinding>() {
     override fun autoLoad() {
         super.autoLoad()
         viewmode.getMyAttendsUser()
+                .async(3000)
                 .doOnSubscribe {
                     swipe_refresh_layout.isRefreshing = true
                 }
@@ -72,6 +74,7 @@ class MyAttendsFragment : WDFragment<FragmentMyAttendsBinding>() {
                     swipe_refresh_layout.isRefreshing = false
                 }
                 .safeSubscribeBy { list ->
+                    swipe_refresh_layout.isRefreshing = false
                     mAdapter.setNewData(list.map {
                         it.addAttend()
                         return@map ProfileVM(it)

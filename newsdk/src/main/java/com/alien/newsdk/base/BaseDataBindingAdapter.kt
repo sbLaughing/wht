@@ -51,14 +51,14 @@ open class BaseDataBindingAdapter<T,V:BaseDataBindingViewHolder<T>>(
     override fun setNewData(data: List<T>?) {
         super.setNewData(data)
         if (this@BaseDataBindingAdapter.data.isEmpty() && (data == null || data.isEmpty()) && emptyView == null && emptyLayoutRes !=null ){
-            setEmptyView(emptyLayoutRes!!)
+            setEmptyView(emptyLayoutRes!!,recyclerView)
         }
     }
 
     override fun addData(newData: Collection<out T>) {
         super.addData(newData)
         if (data.isEmpty() && newData.isEmpty() && emptyView==null&&emptyLayoutRes!=null){
-            setEmptyView(emptyLayoutRes!!)
+            setEmptyView(emptyLayoutRes!!,recyclerView)
         }
     }
 

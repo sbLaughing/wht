@@ -31,7 +31,11 @@ class MineFragment : WDFragment<FragmentMineBinding>() {
         }
         to_login_tv.setOnClickListener {
             getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
+//            getSupportParentFragment()?.start(LoginSelectFragment.newInstance())
+
         }
 
     }
+
+
 }

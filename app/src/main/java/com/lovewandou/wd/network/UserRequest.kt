@@ -16,6 +16,11 @@ import retrofit2.http.POST
  */
 interface UserRequest {
 
+    @POST("queryFeed.do")
+    @FormUrlEncoded
+    fun getHomeFeed(@Field("json")json:String): Maybe<List<UserPostInfo>>
+
+
     @POST("seachUsers.do")
     @FormUrlEncoded
     fun searchUser(@Field("json")json:String): Maybe<List<UserInfo>>
@@ -26,7 +31,8 @@ interface UserRequest {
 
 
     @POST("info.do")
-    fun getUserInfo(@Field("json")json:String)
+    @FormUrlEncoded
+    fun getUserInfo(@Field("json")json:String):Maybe<UserInfo>
 
 
     @POST("queryListByUid.do")
@@ -45,4 +51,10 @@ interface UserRequest {
     @POST("queryAttendUsers.do")
     @FormUrlEncoded
     fun getAttendUsers(@Field("json")json:String):Maybe<List<UserInfo>>
+
+    @POST("setAutoAttend.do")
+    @FormUrlEncoded
+    fun setAutoAttend(@Field("json")json:String):Maybe<BaseResponse>
+
+
 }

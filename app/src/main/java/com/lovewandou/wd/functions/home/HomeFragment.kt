@@ -2,12 +2,15 @@ package com.lovewandou.wd.functions.home
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentHomeBinding
-import com.lovewandou.wd.functions.share.ShareBottomDialog
-import com.lovewandou.wd.functions.video.VedioAdapter
-import com.lovewandou.wd.functions.video.VideoViewModel
+import com.lovewandou.wd.extension.handleSkipLoadmore
+import com.lovewandou.wd.functions.post.PostVM
+import com.lovewandou.wd.functions.profile.UserProfileFragment
+import com.lovewandou.wd.functions.search.SearchFragment
+import com.lovewandou.wd.functions.video.HomeMultiAdapter
 import com.waynell.videolist.visibility.calculator.SingleListViewItemActiveCalculator
 import com.waynell.videolist.visibility.scroll.RecyclerViewItemPositionGetter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -20,41 +23,57 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : WDFragment<FragmentHomeBinding>() {
 
     companion object {
-            fun newInstance():HomeFragment = HomeFragment()
+        fun newInstance(): HomeFragment = HomeFragment()
     }
 
 
     private var mScrollState: Int = 0
-    lateinit var adapter :VedioAdapter
+    lateinit var mAdapter: HomeMultiAdapter
     lateinit var mCalculator: SingleListViewItemActiveCalculator
+    val homeVM = HomeVM()
 
     override fun getLayoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
         setSwipeBackEnable(false)
+
+        mAdapter = HomeMultiAdapter(recycler_view){
+            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(SearchFragment.newInstance())
+        }
         val layoutManager = LinearLayoutManager(context)
+
         recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = mAdapter
 
-        adapter = object :VedioAdapter(recycler_view){
-            override fun getClickChildIds(): Array<Int>? {
-                return arrayOf(R.id.download_btn,R.id.share_btn)
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            (mAdapter.getItem(position) as? PostVM)?.let {
+                val fragment = UserProfileFragment.newInstance(it.userPostInfo)
+                getSupportParentFragment()?.start(fragment)
             }
         }
-        adapter.setOnItemChildClickListener { adapter, view, position ->
-            if (view.id == R.id.share_btn){
-                ShareBottomDialog(_mActivity).show()
-            }
+
+//        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+//            if (view.id == R.id.share_btn) {
+//                ShareBottomDialog(_mActivity).show()
+//            }
+//        }
+
+        mAdapter.setOnLoadMoreListener({
+            loadData(isLoadmore = true)
+        },recycler_view)
+
+        swipe_refresh_layout.setOnRefreshListener {
+            loadData(isLoadmore = false)
         }
-        recycler_view.adapter = adapter
 
 
-        mCalculator = SingleListViewItemActiveCalculator(adapter,RecyclerViewItemPositionGetter(layoutManager,recycler_view))
-        recycler_view.addOnScrollListener(object :RecyclerView.OnScrollListener() {
+        mCalculator = SingleListViewItemActiveCalculator(mAdapter, RecyclerViewItemPositionGetter(layoutManager, recycler_view))
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 mScrollState = newState
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && adapter.itemCount > 0) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mAdapter.itemCount > 0) {
                     mCalculator.onScrollStateIdle()
                 }
             }
@@ -65,35 +84,37 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
             }
         })
 
+        loadData(isLoadmore = false)
+    }
 
+    override fun loadData(isLoadmore: Boolean) {
+        if (!isLoadmore) homeVM.skip = 0
+        homeVM.getHomeFeed()
+                .doOnSubscribe {
+                    if (!isLoadmore) swipe_refresh_layout.isRefreshing = true
+                }
+                .doAfterTerminate {
+                    swipe_refresh_layout.isRefreshing = false
+                }
+                .handleSkipLoadmore(mAdapter,homeVM)
+                .safeSubscribeBy {
+                    if (!isLoadmore){
+                        mAdapter.setNewData(it.map { PostVM(it) })
+                    }else{
+                        mAdapter.addData(it.map { PostVM(it) })
+                    }
 
-        val data = listOf(
-                VideoViewModel("https://media.w3.org/2010/05/sintel/trailer.mp4"),
-
-                VideoViewModel("http://www.w3school.com.cn/example/html5/mov_bbb.mp4"),
-
-                VideoViewModel("https://www.w3schools.com/html/movie.mp4"),
-
-                VideoViewModel("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
-                VideoViewModel("http://techslides.com/demos/sample-videos/small.mp4"),
-                VideoViewModel("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4"),
-                VideoViewModel("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"))
-        adapter.setNewData(data)
-
+                }
     }
 
     override fun onSupportVisible() {
         super.onSupportVisible()
-        if (mCalculator.currentItem!=null){
-            mCalculator.currentItem.listItem.onResume()
-        }
+        mCalculator.currentItem?.listItem?.onResume()
     }
 
     override fun onSupportInvisible() {
         super.onSupportInvisible()
-        if (mCalculator.currentItem!=null){
-            mCalculator.currentItem.listItem.onPause()
-        }
+        mCalculator.currentItem?.listItem?.onPause()
     }
 
 }

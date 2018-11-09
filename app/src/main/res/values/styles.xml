@@ -7,11 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="MToolbarDefaultStyle">@style/ToolbarStyle</item>
-    </style>
-
-    <style name="ToolbarStyle">
-        <item name="app:navigationIcon">@drawable/return_black</item>
     </style>
 
 

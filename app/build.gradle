@@ -9,8 +9,8 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId 'com.inwandou.wandou'
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion 22
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -67,4 +67,9 @@ dependencies {
     }
     api 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'joda-time:joda-time:2.10'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+
 }

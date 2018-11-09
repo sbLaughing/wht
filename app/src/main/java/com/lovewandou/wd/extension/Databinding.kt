@@ -5,8 +5,11 @@ import android.databinding.BindingAdapter
 import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.lovewandou.wd.functions.video.glide.GlideApp
+import com.lovewandou.wd.models.data.UserPostInfo
+import com.ms.square.android.expandabletextview.ExpandableTextView
 
 /**
  * 描述:
@@ -27,7 +30,9 @@ fun bindTextColor(v: TextView, resource: Int? = null) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun bindImageUrl(v: ImageView, url:String?=null){
-    GlideApp.with(v).load(url).into(v)
+    GlideApp.with(v).load(url)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .into(v)
 }
 
 @BindingAdapter(value = ["app:circleAvatar"])
@@ -37,3 +42,22 @@ fun bindCircleAvatar(v: ImageView, url:String?=null){
     }
 }
 
+@BindingAdapter(value = ["android:src"])
+fun bindImageRes(v:ImageView,resource: Int?) {
+    resource?.let {
+        v.setImageResource(it)
+    }
+}
+
+
+@BindingAdapter(value = ["app:expandText"])
+fun bindExpandableTextView(v: ExpandableTextView,info:UserPostInfo ){
+    v.text = info.post_caption
+    v.setOnExpandStateChangeListener { textView, isExpanded ->
+        info.isExpand = isExpanded
+    }
+
+    if (info.isExpand) {
+        v.text
+    }
+}

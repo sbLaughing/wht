@@ -7,7 +7,7 @@ import com.alien.newsdk.network.BaseHttpRespone
  *
  * Created by and on 2018/10/30.
  */
-open class BaseResponse(val code:Int=0,val message:String="") : BaseHttpRespone{
+open class BaseResponse(val code: Int = 0, val message: String = "") : BaseHttpRespone {
 
     override fun isError(): Boolean = code == 40
 
@@ -15,3 +15,6 @@ open class BaseResponse(val code:Int=0,val message:String="") : BaseHttpRespone{
 
     override fun getErrorMsg(): String? = message
 }
+
+
+open class BaseRequest(var skip: Int = 0, var limit: Int = 10)

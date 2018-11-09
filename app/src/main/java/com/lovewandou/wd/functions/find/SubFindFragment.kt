@@ -7,6 +7,7 @@ import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentSimpleListBinding
+import com.lovewandou.wd.extension.handleSkipLoadmore
 import com.lovewandou.wd.functions.profile.ProfileVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
 import kotlinx.android.synthetic.main.fragment_simple_list.*
@@ -19,15 +20,15 @@ import kotlinx.android.synthetic.main.fragment_simple_list.*
 class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
 
     companion object {
-            fun newInstance(labelTag:String):SubFindFragment = SubFindFragment().apply {
-                arguments = Bundle()
-                arguments?.putString("tag",labelTag)
-            }
+        fun newInstance(labelTag: String): SubFindFragment = SubFindFragment().apply {
+            arguments = Bundle()
+            arguments?.putString("tag", labelTag)
+        }
     }
 
-    val findVm=FindVM()
-    val tagLabel by lazy { arguments?.getString("tag")?:"" }
-    private val mAdapter = object : CommonAdapter<ProfileVM>(R.layout.item_user_in_find){
+    val findVm = FindVM()
+    val tagLabel by lazy { arguments?.getString("tag") ?: "" }
+    private val mAdapter = object : CommonAdapter<ProfileVM>(R.layout.item_user_in_find) {
         override fun getClickChildIds(): Array<Int>? {
             return arrayOf(R.id.attend_tv)
         }
@@ -41,8 +42,13 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
         recycler_view.adapter = mAdapter
 
         swipe_refresh_layout.setOnRefreshListener {
-            loadData()
+            getData()
         }
+
+        mAdapter.setEnableLoadMore(true)
+        mAdapter.setOnLoadMoreListener({
+            getData(true)
+        }, recycler_view)
 
         mAdapter.setOnItemClickListener { adapter, view, position ->
             mAdapter.getItem(position)?.let {
@@ -53,28 +59,31 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             mAdapter.getItem(position)?.apply {
-                toggleAttend().safeSubscribeBy {  }
+                toggleAttend().safeSubscribeBy { }
             }
         }
 
 
-        loadData()
+        getData()
 
     }
 
-    override fun loadData(){
-        findVm.searchUsers(tag = tagLabel)
-                .doOnSubscribe {
-                    swipe_refresh_layout.isRefreshing = true
-                }
-                .doAfterTerminate {
-                    swipe_refresh_layout.isRefreshing = false
-                }
-                .doOnError {
-                    it.printStackTrace()
-                }
+    fun getData(isLoadmore: Boolean = false) {
+        if (!isLoadmore) findVm.skip = 0
+        val maybe = findVm.searchUsers(tag = tagLabel)
+        if (isLoadmore) {
+            maybe
+        } else {
+            maybe.doOnSubscribe {
+                swipe_refresh_layout.isRefreshing = true
+            }.doAfterTerminate {
+                swipe_refresh_layout.isRefreshing = false
+            }
+        }
+                .handleSkipLoadmore(mAdapter, findVm)
                 .safeSubscribeBy {
-                    mAdapter.setNewData(it.map { ProfileVM(it) })
+                    if (!isLoadmore) mAdapter.setNewData(it.map { ProfileVM(it) })
+                    else mAdapter.addData(it.map { ProfileVM(it) })
                 }
     }
 

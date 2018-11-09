@@ -42,6 +42,7 @@
 
                     <ImageView
                         android:layout_width="100dp"
+                        android:transitionName="avatariv"
                         app:circleAvatar="@{vm.userInfo.thumbnail}"
                         tools:src="@mipmap/ic_launcher"
                         android:layout_gravity="center_horizontal"

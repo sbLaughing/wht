@@ -19,4 +19,5 @@ public interface VideoLoadMvpView {
     void videoPrepared(MediaPlayer player);
 
     void videoResourceReady(String videoPath);
+
 }

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">豌豆多多</string>
+    <string name="search_empty_hint"><Data>
+
+    <![CDATA[
+        Sorry，没有找到 <font color="#229c50"><b>%s</b></font> ，你可以点击下方的帮我自动关注按钮，
+        一旦我们支持关注 <font color="#229c50"><b>%s</b></font> ，将会自动帮你关注，请确保你搜索的instagram用户ID是完整且正确的。
+    ]]>
+
+    </Data></string>
+
 </resources>
