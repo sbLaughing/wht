@@ -52,11 +52,6 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
             }
         }
 
-//        mAdapter.setOnItemChildClickListener { adapter, view, position ->
-//            if (view.id == R.id.share_btn) {
-//                ShareBottomDialog(_mActivity).show()
-//            }
-//        }
 
         mAdapter.setOnLoadMoreListener({
             loadData(isLoadmore = true)
@@ -103,18 +98,17 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
                     }else{
                         mAdapter.addData(it.map { PostVM(it) })
                     }
-
                 }
     }
 
-    override fun onSupportVisible() {
-        super.onSupportVisible()
-        mCalculator.currentItem?.listItem?.onResume()
-    }
-
-    override fun onSupportInvisible() {
-        super.onSupportInvisible()
-        mCalculator.currentItem?.listItem?.onPause()
-    }
+//    override fun onSupportVisible() {
+//        super.onSupportVisible()
+//        mCalculator.currentItem?.listItem?.onResume()
+//    }
+//
+//    override fun onSupportInvisible() {
+//        super.onSupportInvisible()
+//        mCalculator.currentItem?.listItem?.onPause()
+//    }
 
 }

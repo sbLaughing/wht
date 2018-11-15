@@ -72,4 +72,10 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
 
+
+
+
+    implementation 'com.sina.weibo.sdk:core:4.3.4:openDefaultRelease@aar'
+
+
 }

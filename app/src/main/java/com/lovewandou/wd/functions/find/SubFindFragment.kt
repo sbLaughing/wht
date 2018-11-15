@@ -75,14 +75,16 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
             maybe
         } else {
             maybe.doOnSubscribe {
-                swipe_refresh_layout.isRefreshing = true
+                swipe_refresh_layout?.isRefreshing = true
             }.doAfterTerminate {
-                swipe_refresh_layout.isRefreshing = false
+                swipe_refresh_layout?.isRefreshing = false
             }
         }
                 .handleSkipLoadmore(mAdapter, findVm)
                 .safeSubscribeBy {
-                    if (!isLoadmore) mAdapter.setNewData(it.map { ProfileVM(it) })
+                    if (findVm.firstPage()){
+                        mAdapter.setNewData(it.map { ProfileVM(it) })
+                    }
                     else mAdapter.addData(it.map { ProfileVM(it) })
                 }
     }

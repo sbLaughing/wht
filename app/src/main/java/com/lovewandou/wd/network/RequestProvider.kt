@@ -22,7 +22,7 @@ object RequestProvider {
                 return 60
             }
 
-            override fun getBaseUrl(): String = "http://47.106.242.220:8088/"
+            override fun getBaseUrl(): String = "https://api.lovewht.com/"
 
             override fun configLogEnable(): Boolean = BuildConfig.DEBUG
 

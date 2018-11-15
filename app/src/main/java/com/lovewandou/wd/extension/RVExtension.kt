@@ -11,9 +11,11 @@ import io.reactivex.Maybe
  */
 
 fun <T : List<*>> Maybe<T>.handleSkipLoadmore(mAdapter: BaseDataBindingAdapter<*, *>, vm: BaseSkipVM): Maybe<T> {
-    return this.doOnSuccess {
-        if (it.size < vm.limit) mAdapter.loadMoreEnd(true)
-        else {
+    return this.doAfterSuccess {
+        if (it.size < vm.limit) {
+            mAdapter.loadMoreEnd(true)
+//            mAdapter.setEnableLoadMore(false)
+        } else {
             mAdapter.loadMoreComplete()
         }
         vm.skip+=vm.limit

@@ -17,7 +17,15 @@ import io.reactivex.Maybe
  */
 class FindVM :BaseSkipVM() {
 
+    var currentKey :String? = null
 
+    fun searchUsers(key:String ?= currentKey): Maybe<List<UserInfo>> {
+        val req = SearchReq(keyword = key)
+        req.skip = skip
+        req.limit = limit
+        return RequestProvider.userRequest.searchUser(AppData.mGson.toJson(req))
+                .async()
+    }
 
     fun searchUsers(key:String?=null,tag:String?=null): Maybe<List<UserInfo>> {
         val req = SearchReq(keyword = key,tag = tag)

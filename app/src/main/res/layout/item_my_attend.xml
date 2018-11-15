@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View"/>
         <variable
             name="item"
             type="com.lovewandou.wd.functions.profile.ProfileVM"/>
@@ -63,6 +65,7 @@
             android:id="@+id/attend_tv"
             android:text="@{item.curAttendString}"
             android:layout_marginLeft="15dp"
+            android:visibility="@{item.showAttendBtn?View.VISIBLE:View.INVISIBLE}"
             tools:background="@drawable/ripple_round_accent"
             android:textSize="16sp"
             android:layout_gravity="center_vertical"

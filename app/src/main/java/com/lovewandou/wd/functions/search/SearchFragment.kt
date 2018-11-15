@@ -10,6 +10,7 @@ import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentSearchBinding
+import com.lovewandou.wd.extension.handleSkipLoadmore
 import com.lovewandou.wd.extension.showToast
 import com.lovewandou.wd.functions.find.FindVM
 import com.lovewandou.wd.functions.profile.ProfileVM
@@ -32,7 +33,7 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
     }
 
     val findVM = FindVM()
-    val mAdapter = object : CommonAdapter<ProfileVM>(R.layout.item_my_attend,emptyLayoutRes = null) {
+    val mAdapter = object : CommonAdapter<ProfileVM>(R.layout.item_my_attend, emptyLayoutRes = null) {
         override fun getClickChildIds(): Array<Int>? {
             return arrayOf(R.id.attend_tv)
         }
@@ -53,6 +54,10 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
                 start(UserProfileFragment.newInstance(it))
             }
         }
+
+        mAdapter.setOnLoadMoreListener({
+            search()
+        }, recycler_view)
         search_bar.editText.requestFocus()
         cancel_btn.setOnClickListener {
             pop()
@@ -72,29 +77,18 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
                     flow.onNext("")
                     mAdapter.setNewData(listOf())
                     empty_layout.visibility = View.GONE
-                }else{
+                } else {
                     flow.onNext(s.toString())
                 }
             }
         })
 
-        flow.debounce(500, TimeUnit.MILLISECONDS)
+        flow.debounce(200, TimeUnit.MILLISECONDS)
                 .filter { it.isNotEmpty() }
-                .flatMapMaybe {key->
-                        return@flatMapMaybe findVM.searchUsers(key = key)
-                                .map {
-                                    SearchWrapper(key,it)
-                                }
-                }
                 .safeSubscribeBy {
-                    mAdapter.setNewData(it.result.map { ProfileVM(it) })
-                    if (it.result.isEmpty()){
-                        empty_layout.visibility = View.VISIBLE
-                        var string = String.format(getString(R.string.search_empty_hint,it.key,it.key))
-                        empty_tv.text =  Html.fromHtml(string)
-                    }else{
-                        empty_layout.visibility = View.GONE
-                    }
+                    findVM.currentKey = it
+                    findVM.resetPaging()
+                    search()
                 }
 
         auto_attend_tv.setOnClickListener { _ ->
@@ -103,6 +97,28 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
                         context?.showToast("自动关注成功")
                     }
         }
+    }
+
+    fun search() {
+        findVM.searchUsers()
+                .handleSkipLoadmore(mAdapter, findVM)
+                .map {
+                    SearchWrapper(findVM.currentKey ?: "", it)
+                }
+                .safeSubscribeBy {
+                    if (findVM.firstPage()) {
+                        mAdapter.setNewData(it.result.map { ProfileVM(it, showAttendBtn = false) })
+                        if (it.result.isEmpty()) {
+                            empty_layout.visibility = View.VISIBLE
+                            var string = String.format(getString(R.string.search_empty_hint, it.key, it.key))
+                            empty_tv.text = Html.fromHtml(string)
+                        } else {
+                            empty_layout.visibility = View.GONE
+                        }
+                    } else {
+                        mAdapter.addData(it.result.map { ProfileVM(it, showAttendBtn = false) })
+                    }
+                }
     }
 
     override fun onCreateFragmentAnimator(): FragmentAnimator {

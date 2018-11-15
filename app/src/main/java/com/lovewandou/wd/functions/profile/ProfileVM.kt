@@ -20,7 +20,7 @@ import io.reactivex.Maybe
  *
  * Created by and on 2018/11/4.
  */
-class ProfileVM(var userInfo: UserInfo) : BaseSkipVM(), Parcelable {
+class ProfileVM(var userInfo: UserInfo,val showAttendBtn:Boolean=true) : BaseSkipVM(), Parcelable {
     @Bindable
     fun isAttend(): Boolean {
         return userInfo.isAttend()

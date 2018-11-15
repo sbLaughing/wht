@@ -13,5 +13,13 @@ open class BaseSkipVM : BaseVM() {
     var limit = 10
 
 
+    fun resetPaging(){
+        skip = 0;
+    }
+
+    fun firstPage():Boolean{
+        return skip == 0
+    }
+
 
 }

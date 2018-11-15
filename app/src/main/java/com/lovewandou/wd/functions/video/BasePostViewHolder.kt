@@ -1,6 +1,7 @@
 package com.lovewandou.wd.functions.video
 
 import android.Manifest
+import android.app.Activity
 import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
@@ -13,6 +14,7 @@ import com.lovewandou.wd.R
 import com.lovewandou.wd.extension.rxrequestPermission
 import com.lovewandou.wd.extension.showToast
 import com.lovewandou.wd.functions.post.PostVM
+import com.lovewandou.wd.functions.share.ShareBottomDialog
 import com.lovewandou.wd.functions.video.glide.GlideApp
 
 /**
@@ -40,6 +42,12 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
             }
         }
 
+        shareBtn.setOnClickListener { it ->
+            (it.context as? Activity)?.let {
+                ShareBottomDialog(it).show()
+            }
+
+        }
 
     }
 

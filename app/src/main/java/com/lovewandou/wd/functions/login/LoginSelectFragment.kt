@@ -3,6 +3,10 @@ package com.lovewandou.wd.functions.login
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentLoginSelectBinding
+import com.lovewandou.wd.functions.main.MainActivity
+import com.sina.weibo.sdk.auth.Oauth2AccessToken
+import com.sina.weibo.sdk.auth.WbAuthListener
+import com.sina.weibo.sdk.auth.WbConnectErrorMessage
 import kotlinx.android.synthetic.main.fragment_login_select.*
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 
@@ -27,6 +31,20 @@ class LoginSelectFragment : WDFragment<FragmentLoginSelectBinding>() {
 
         account_login_tv.setOnClickListener {
             start(LoginFragment.newInstance())
+        }
+
+        weibo_login_tv.setOnClickListener {
+            (_mActivity as? MainActivity)?.mSsoHandler?.authorize(object :WbAuthListener{
+                override fun onSuccess(p0: Oauth2AccessToken?) {
+                    p0
+                }
+
+                override fun onFailure(p0: WbConnectErrorMessage?) {
+                }
+
+                override fun cancel() {
+                }
+            })
         }
     }
 

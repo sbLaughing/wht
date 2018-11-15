@@ -16,7 +16,7 @@ import com.waynell.videolist.visibility.scroll.ItemsProvider
  *
  * Created by and on 2018/11/6.
  */
-class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit): BaseDataBindingAdapter<IMultiItem,BaseDataBindingViewHolder<IMultiItem>>(0,null,0),ItemsProvider {
+class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit): BaseDataBindingAdapter<IMultiItem,BaseDataBindingViewHolder<IMultiItem>>(0,null),ItemsProvider {
 
     val emptyLayout :View
     init {
@@ -45,13 +45,15 @@ class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit)
     }
 
     override fun setNewData(data: List<IMultiItem>?) {
-        if (this@HomeMultiAdapter.data.isEmpty() && (data == null || data.isEmpty()) && emptyView == null && emptyLayoutRes !=null ){
+        super.setNewData(data)
+        if (this@HomeMultiAdapter.data.isEmpty() && (data == null || data.isEmpty()) && emptyView == null){
             emptyView = emptyLayout
         }
     }
 
     override fun addData(newData: Collection<out IMultiItem>) {
-        if (data.isEmpty() && newData.isEmpty() && emptyView==null&&emptyLayoutRes!=null){
+        super.addData(newData)
+        if (data.isEmpty() && newData.isEmpty() && emptyView==null){
             emptyView = emptyLayout
         }
     }
