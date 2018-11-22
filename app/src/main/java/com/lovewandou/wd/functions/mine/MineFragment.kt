@@ -1,5 +1,6 @@
 package com.lovewandou.wd.functions.mine
 
+import com.alien.ksdk.web.WebManager
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentMineBinding
@@ -29,10 +30,27 @@ class MineFragment : WDFragment<FragmentMineBinding>() {
         attends_tv.setOnClickListener {
             getSupportParentFragment()?.start(MyAttendsFragment.newInstance())
         }
-        to_login_tv.setOnClickListener {
-            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
-//            getSupportParentFragment()?.start(LoginSelectFragment.newInstance())
 
+        avatar_imageview.setOnClickListener {
+            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
+        }
+        to_login_tv.setOnClickListener {
+            if (AppData.appVM.isLogin) return@setOnClickListener
+            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
+        }
+
+        contact_us_tv.setOnClickListener {
+            WebManager.Build(context).apply {
+                url = "https://h5.lovewht.com/contact.html"
+                lightBar = true
+            }.open()
+        }
+
+        hide_tv.setOnClickListener {
+            WebManager.Build(context).apply {
+                url = "https://h5.lovewht.com/noshow.html"
+                lightBar = true
+            }.open()
         }
 
     }

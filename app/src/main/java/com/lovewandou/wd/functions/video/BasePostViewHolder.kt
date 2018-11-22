@@ -2,12 +2,10 @@ package com.lovewandou.wd.functions.video
 
 import android.Manifest
 import android.app.Activity
-import android.graphics.Bitmap
-import android.provider.MediaStore
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.alien.newsdk.base.BaseDataBindingViewHolder
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.alien.newsdk.extensions.saveImage2Gallery
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.lovewandou.wd.R
@@ -16,6 +14,7 @@ import com.lovewandou.wd.extension.showToast
 import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.share.ShareBottomDialog
 import com.lovewandou.wd.functions.video.glide.GlideApp
+import java.io.File
 
 /**
  * 描述:
@@ -44,7 +43,7 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
 
         shareBtn.setOnClickListener { it ->
             (it.context as? Activity)?.let {
-                ShareBottomDialog(it).show()
+                ShareBottomDialog(it,data).show()
             }
 
         }
@@ -53,12 +52,12 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
 
     fun onImageDownload(view: View, url: String) {
         GlideApp.with(view)
-                .asBitmap()
+                .asFile()
                 .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .into(object : SimpleTarget<Bitmap>() {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        MediaStore.Images.Media.insertImage(view.context.contentResolver, resource, "", "")
+                .into(object : SimpleTarget<File>() {
+                    override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                        resource.saveImage2Gallery(view.context)
+//                        MediaStore.Images.Media.insertImage(view.context.contentResolver, resource, "", "")
                         view.context.showToast("保存成功")
                     }
 

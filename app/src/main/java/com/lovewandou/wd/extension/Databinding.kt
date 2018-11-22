@@ -5,8 +5,10 @@ import android.databinding.BindingAdapter
 import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.lovewandou.wd.R
 import com.lovewandou.wd.functions.video.glide.GlideApp
 import com.lovewandou.wd.models.data.UserPostInfo
 import com.ms.square.android.expandabletextview.ExpandableTextView
@@ -29,21 +31,22 @@ fun bindTextColor(v: TextView, resource: Int? = null) {
 }
 
 @BindingAdapter(value = ["app:imageUrl"])
-fun bindImageUrl(v: ImageView, url:String?=null){
+fun bindImageUrl(v: ImageView, url: String? = null) {
     GlideApp.with(v).load(url)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(v)
 }
 
 @BindingAdapter(value = ["app:circleAvatar"])
-fun bindCircleAvatar(v: ImageView, url:String?=null){
+fun bindCircleAvatar(v: ImageView, url: String? = null) {
     url?.let {
-        GlideApp.with(v).load(url).apply(RequestOptions.circleCropTransform()).into(v)
-    }
+        Glide.with(v.context).load(url).apply(RequestOptions.circleCropTransform()).into(v)
+    }?:v.setImageResource(R.drawable.tourists_avatar)
+
 }
 
 @BindingAdapter(value = ["android:src"])
-fun bindImageRes(v:ImageView,resource: Int?) {
+fun bindImageRes(v: ImageView, resource: Int?) {
     resource?.let {
         v.setImageResource(it)
     }
@@ -51,7 +54,7 @@ fun bindImageRes(v:ImageView,resource: Int?) {
 
 
 @BindingAdapter(value = ["app:expandText"])
-fun bindExpandableTextView(v: ExpandableTextView,info:UserPostInfo ){
+fun bindExpandableTextView(v: ExpandableTextView, info: UserPostInfo) {
     v.text = info.post_caption
     v.setOnExpandStateChangeListener { textView, isExpanded ->
         info.isExpand = isExpanded

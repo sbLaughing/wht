@@ -14,7 +14,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
  *
  * Created by and on 2018/11/7.
  */
-fun Context.showToast(str:String){
+fun Context?.showToast(str:String){
     Toast.makeText(this,str,Toast.LENGTH_SHORT).show()
 }
 

@@ -53,4 +53,10 @@ dependencies {
     api 'me.yokeyword:fragmentation:1.3.5'
 //    api 'me.yokeyword:fragmentation-core:1.3.5'
     api 'me.yokeyword:fragmentation-swipeback:1.3.5'
+
+
+    implementation 'com.uber.autodispose:autodispose-ktx:1.0.0'
+    implementation 'com.uber.autodispose:autodispose-android-ktx:1.0.0'
+    implementation 'com.uber.autodispose:autodispose-rxlifecycle:1.0.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents-ktx:1.0.0'
 }

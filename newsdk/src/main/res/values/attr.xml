@@ -51,4 +51,10 @@
         <attr name="met_validateOnFocusLost" format="boolean" />
         <attr name="met_checkCharactersCountAtBeginning" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CaptchaLayout">
+        <attr name="max_time" format="integer"/>
+        <attr name="init_text" format="string"/>
+        <attr name="stringFormat" format="string"/>
+    </declare-styleable>
 </resources>

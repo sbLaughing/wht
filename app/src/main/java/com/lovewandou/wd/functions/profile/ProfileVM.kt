@@ -73,7 +73,7 @@ class ProfileVM(var userInfo: UserInfo,val showAttendBtn:Boolean=true) : BaseSki
 
     fun attendUser(userid: String = userInfo.user_id): Maybe<BaseResponse> {
         return RequestProvider.userRequest.attendUser(AppData.mGson.toJson(UserIdReq(userid)))
-                .async()
+                .async(3000)
                 .transformData()
     }
 

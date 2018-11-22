@@ -43,7 +43,7 @@ data class UserInfo(
     }
 
     fun isAttendValid(): Boolean {
-        return is_attend !=null
+        return is_attend != null
     }
 
     fun cancelAttend() {

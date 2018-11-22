@@ -2,7 +2,9 @@ package com.lovewandou.wd.functions.profile
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import com.alien.newsdk.extensions.dp2px
+import com.alien.newsdk.extensions.safeSubscribeByNew
 import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
@@ -49,7 +51,8 @@ class UserProfileFragment : WDFragment<FragmentUserProfileBinding>() {
             mBinding.vm = vm
 
             attend_tv.setOnClickListener {
-                vm.toggleAttend()?.safeSubscribeBy {
+                vm.toggleAttend()?.safeSubscribeByNew(owner = this@UserProfileFragment) {
+                    attend_tv.visibility = View.VISIBLE
                     vm.notifyChange()
                 }
             }
@@ -80,7 +83,9 @@ class UserProfileFragment : WDFragment<FragmentUserProfileBinding>() {
                     }
 
             if (!vm.userInfo.isAttendValid()) {
-                vm.fetchUserInfo().safeSubscribeBy { }
+                vm.fetchUserInfo()
+                        .safeSubscribeBy {
+                        }
             }
         }
 

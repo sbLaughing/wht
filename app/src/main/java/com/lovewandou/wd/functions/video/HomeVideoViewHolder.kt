@@ -1,25 +1,18 @@
 package com.lovewandou.wd.functions.video
 
-import android.content.Intent
 import android.media.MediaPlayer
-import android.net.Uri
-import android.os.Environment
-import android.provider.MediaStore
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPropertyAnimatorListener
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
+import com.alien.newsdk.extensions.insertIntoMediaStore
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.lovewandou.wd.BuildConfig
 import com.lovewandou.wd.R
-import com.lovewandou.wd.extension.showToast
 import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.video.glide.GlideApp
-import com.lovewandou.wd.util.FileUtils
 import com.waynell.videolist.visibility.items.ListItem
 import com.waynell.videolist.widget.ScaleType
 import com.waynell.videolist.widget.TextureVideoView
@@ -57,23 +50,23 @@ class HomeVideoViewHolder(view: View) : BasePostViewHolder(view), VideoLoadMvpVi
         GlideApp.with(view.context)
                 .asFile()
                 .load(url)
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
-                .downloadOnly(object : SimpleTarget<File>(){
+                .into(object : SimpleTarget<File>(){
                     override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                        val trailStr = url.split("/").last()
-                        val newFile = File(view.context.getExternalFilesDir(Environment.DIRECTORY_MOVIES),trailStr)
-                        resource.copyTo(newFile,overwrite = true)
-                        val cr = view.context.contentResolver
-                        val cv = FileUtils.getVideoContentValues(view.context,newFile,System.currentTimeMillis())
-                        cr.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,cv)
-
-//                        view.context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-//                                Uri.fromFile(newFile)))
-                        val localIntent = Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE")
-                        val localUri = Uri.fromFile(newFile)
-                        localIntent.data = localUri
-                        view.context.sendBroadcast(localIntent)
-                        view.context.showToast("保存成功")
+                        insertIntoMediaStore(view.context, true, resource, System.currentTimeMillis())
+//                        val trailStr = url.split("/").last()
+//                        val newFile = File(view.context.getExternalFilesDir(Environment.DIRECTORY_MOVIES),trailStr)
+//                        resource.copyTo(newFile,overwrite = true)
+//                        val cr = view.context.contentResolver
+//                        val cv = FileUtils.getVideoContentValues(view.context,newFile,System.currentTimeMillis())
+//                        cr.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,cv)
+//
+////                        view.context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+////                                Uri.fromFile(newFile)))
+//                        val localIntent = Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE")
+//                        val localUri = Uri.fromFile(newFile)
+//                        localIntent.data = localUri
+//                        view.context.sendBroadcast(localIntent)
+//                        view.context.showToast("保存成功")
                     }
                 })
     }
@@ -90,8 +83,7 @@ class HomeVideoViewHolder(view: View) : BasePostViewHolder(view), VideoLoadMvpVi
         GlideApp.with(itemView.context)
                 .asFile()
                 .load(data.userPostInfo.post_video_url)
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
-                .downloadOnly(loadTarget)
+                .into(loadTarget)
 
     }
 

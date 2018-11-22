@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -20,6 +21,8 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_gravity="center_horizontal"
+                android:id="@+id/avatar_imageview"
+                app:circleAvatar="@{appvm.accountInfo.avatar}"
                 android:src="@drawable/tourists_avatar"
                 android:layout_marginTop="60dp"
                 android:layout_height="80dp" />
@@ -32,7 +35,7 @@
                 android:id="@+id/to_login_tv"
                 android:layout_marginTop="20dp"
                 android:textSize="20sp"
-                android:text='@{appvm.accountInfo.loginShowString}'
+                android:text='@{appvm.login?appvm.accountInfo.loginShowString:"登录"}'
                 android:layout_height="wrap_content" />
 
 
@@ -79,6 +82,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="联系我们"
+                android:id="@+id/contact_us_tv"
                 android:textColor="@color/comTextColor"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
@@ -88,10 +92,10 @@
 
             <TextView
                 android:layout_width="match_parent"
+                android:id="@+id/hide_tv"
                 android:text="不显示我的帖子"
                 android:textColor="@color/comTextColor"
                 android:textSize="18sp"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/ripple_trans"
                 android:padding="16dp"
                 android:layout_height="wrap_content" />

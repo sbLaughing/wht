@@ -4,7 +4,6 @@ import android.databinding.ObservableField
 import com.alien.newsdk.base.BaseVM
 import com.alien.newsdk.network.async
 import com.alien.newsdk.network.transformData
-import com.lovewandou.wd.BR
 import com.lovewandou.wd.models.AppData
 import com.lovewandou.wd.models.data.LoginResp
 import com.lovewandou.wd.network.RequestProvider
@@ -20,16 +19,29 @@ class LoginVM : BaseVM() {
     val accountString = ObservableField<String>("")
     val passwordString = ObservableField<String>("")
 
+    val commonSuc :(LoginResp)->Unit = {
+        AppData.token = it.token
+        AppData.appVM.apply {
+            accountInfo = it.user
+            notifyChange()
+        }
+    }
+
     fun login(): Maybe<LoginResp> {
         return RequestProvider.accountRequest.login(accountString.get()?:"",passwordString.get()?:"")
                 .async()
                 .transformData()
-                .doOnSuccess {
-                    AppData.token = it.token
-                    AppData.appVM.apply {
-                        accountInfo = it.user
-                        notifyPropertyChanged(BR.accountInfo)
-                    }
+                .doOnSuccess(commonSuc)
+    }
+
+
+    fun getWeiboUserInfo(token:String,uid:String): Maybe<LoginResp>{
+        return RequestProvider.authRequest.getWeiboProfile(token,uid)
+                .flatMap {
+                    RequestProvider.accountRequest.weiboLogin(it.idstr,it.name,it.profile_image_url)
                 }
+                .async()
+                .doOnSuccess(commonSuc)
+
     }
 }

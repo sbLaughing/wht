@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alien.newsdk" />
+    package="com.alien.newsdk" >
+
+    <application>
+        <activity android:name="com.alien.ksdk.web.SDKWebViewActiivty"
+            android:screenOrientation="portrait"/>
+    </application>
+</manifest>

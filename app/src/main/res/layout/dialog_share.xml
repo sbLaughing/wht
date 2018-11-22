@@ -16,12 +16,17 @@
         <ImageView
             android:padding="6dp"
             android:layout_width="0dp"
+            android:background="@drawable/ripple_wideless"
+            android:id="@+id/wechat_share_tv"
             android:src="@drawable/share_wechat"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
 
         <ImageView
             android:padding="6dp"
+            android:id="@+id/wechat_circle_share_tv"
+            android:background="@drawable/ripple_wideless"
+
             android:layout_width="0dp"
             android:src="@drawable/share_frid"
             android:layout_weight="1"
@@ -30,6 +35,9 @@
         <ImageView
             android:padding="6dp"
             android:layout_width="0dp"
+            android:background="@drawable/ripple_wideless"
+
+            android:id="@+id/weibo_share_tv"
             android:src="@drawable/share_weibo"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
@@ -37,6 +45,8 @@
         <ImageView
             android:padding="6dp"
             android:layout_width="0dp"
+            android:background="@drawable/ripple_wideless"
+
             android:src="@drawable/share_more"
             android:layout_weight="1"
             android:layout_height="wrap_content" />

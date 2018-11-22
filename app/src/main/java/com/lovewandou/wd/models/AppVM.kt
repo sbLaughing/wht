@@ -20,5 +20,10 @@ class AppVM : BaseVM() {
         notifyPropertyChanged(BR.accountInfo)
     }
 
+    @Bindable
+    var isLogin:Boolean = false
+        get() {
+            return accountInfo.isValid()
+        }
 
 }

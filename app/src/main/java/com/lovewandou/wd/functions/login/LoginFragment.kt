@@ -1,10 +1,12 @@
 package com.lovewandou.wd.functions.login
 
+import android.app.Activity
+import android.os.Bundle
 import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentLoginBinding
-import com.lovewandou.wd.functions.main.MainFragment
+import com.lovewandou.wd.functions.pwd.FindPwdFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
@@ -28,13 +30,20 @@ class LoginFragment : WDFragment<FragmentLoginBinding>() {
 
         login_tv.setOnClickListener {_->
             vm.login().safeSubscribeBy {
-                popTo(MainFragment::class.java,false)
+                setFragmentResult(Activity.RESULT_OK, Bundle())
+                pop()
             }
+        }
+
+        find_pwd_tv.setOnClickListener {
+            start(FindPwdFragment.newInstance())
         }
 
         back_btn.setOnClickListener {
             pop()
         }
+
+
 
     }
 }

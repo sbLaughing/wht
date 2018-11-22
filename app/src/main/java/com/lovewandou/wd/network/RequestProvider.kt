@@ -70,4 +70,8 @@ object RequestProvider {
     val userRequest by lazy {
         retrofit.create(UserRequest::class.java)
     }
+
+    val authRequest by lazy {
+        retrofit.create(AuthRequest::class.java)
+    }
 }

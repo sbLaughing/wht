@@ -8,6 +8,7 @@ import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentPostDetailBinding
 import com.lovewandou.wd.databinding.ItemHomeBinding
 import com.lovewandou.wd.databinding.ItemHomeVideoBinding
+import com.lovewandou.wd.functions.video.BasePostViewHolder
 import com.lovewandou.wd.functions.video.HomeVideoViewHolder
 import com.lovewandou.wd.models.data.UserPostInfo
 import kotlinx.android.synthetic.main.fragment_post_detail.*
@@ -50,8 +51,10 @@ class PostDetailFragment : WDFragment<FragmentPostDetailBinding>() {
                 videoViewHolder?.setActive(null,0)
             }else{
                 val viewDatabinding= DataBindingUtil.inflate<ItemHomeBinding>(LayoutInflater.from(context),R.layout.item_home,null,false)
-                scroll_view.addView(viewDatabinding.root)
+                val imageViewHolder = BasePostViewHolder(viewDatabinding.root)
+                scroll_view.addView(imageViewHolder.itemView)
                 viewDatabinding.item = vm
+                imageViewHolder.onBind(0,vm)
             }
         }
     }

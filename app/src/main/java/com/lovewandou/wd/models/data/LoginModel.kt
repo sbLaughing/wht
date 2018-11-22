@@ -22,11 +22,15 @@ data class AccountInfo(
         val user_id:String=""
 ):Serializable{
 
-    fun getLoginShowString(): String {
-        return if (isValid()) user_name else "登录"
+    fun getAvatar():String?{
+        return if (thumbnail.isEmpty()) null else thumbnail
+
     }
 
-    fun isValid(): Boolean {
-        return !mobile.isEmpty() && !user_name.isEmpty()
+    fun getLoginShowString(): String {
+        return user_name
     }
+
+
+    fun isValid():Boolean = user_id.isNotEmpty()
 }

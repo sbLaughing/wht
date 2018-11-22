@@ -49,6 +49,7 @@
             android:id="@+id/qq_login_tv"
             android:layout_below="@id/weibo_login_tv"
             android:textStyle="bold"
+            android:visibility="gone"
             android:layout_marginBottom="12dp"
             android:drawablePadding="12dp"
             android:gravity="center"

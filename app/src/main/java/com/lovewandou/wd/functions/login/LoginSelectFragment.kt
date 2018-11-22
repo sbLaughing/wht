@@ -1,8 +1,12 @@
 package com.lovewandou.wd.functions.login
 
+import android.app.Activity
+import android.os.Bundle
+import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentLoginSelectBinding
+import com.lovewandou.wd.extension.showToast
 import com.lovewandou.wd.functions.main.MainActivity
 import com.sina.weibo.sdk.auth.Oauth2AccessToken
 import com.sina.weibo.sdk.auth.WbAuthListener
@@ -24,29 +28,45 @@ class LoginSelectFragment : WDFragment<FragmentLoginSelectBinding>() {
 
     override fun getLayoutRes(): Int = R.layout.fragment_login_select
 
+    val loginVM = LoginVM()
+
     override fun initView() {
         close_btn.setOnClickListener {
             pop()
         }
 
         account_login_tv.setOnClickListener {
-            start(LoginFragment.newInstance())
+            startForResult(LoginFragment.newInstance(),1)
         }
 
         weibo_login_tv.setOnClickListener {
             (_mActivity as? MainActivity)?.mSsoHandler?.authorize(object :WbAuthListener{
-                override fun onSuccess(p0: Oauth2AccessToken?) {
-                    p0
+                override fun onSuccess(p0: Oauth2AccessToken) {
+                    loginVM.getWeiboUserInfo(p0.token,p0.uid)
+                            .safeSubscribeBy {
+                                context?.showToast("微博登录成功")
+//                                popTo(MainFragment::class.java,false)
+                                pop()
+                            }
                 }
 
                 override fun onFailure(p0: WbConnectErrorMessage?) {
+                    context?.showToast("微博登录失败")
                 }
 
                 override fun cancel() {
+                    context?.showToast("微博登录取消")
                 }
             })
         }
     }
+
+
+    override fun onFragmentResult(requestCode: Int, resultCode: Int, data: Bundle?) {
+        super.onFragmentResult(requestCode, resultCode, data)
+        if (resultCode== Activity.RESULT_OK) pop()
+    }
+
 
 
     override fun onCreateFragmentAnimator(): FragmentAnimator {

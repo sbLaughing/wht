@@ -11,6 +11,7 @@ import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
 import com.lovewandou.wd.functions.search.SearchFragment
 import com.lovewandou.wd.functions.video.HomeMultiAdapter
+import com.lovewandou.wd.models.AppData
 import com.waynell.videolist.visibility.calculator.SingleListViewItemActiveCalculator
 import com.waynell.videolist.visibility.scroll.RecyclerViewItemPositionGetter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -79,7 +80,12 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
             }
         })
 
-        loadData(isLoadmore = false)
+        if (!AppData.appVM.isLogin){
+            mAdapter.setNewData(listOf())
+        }else{
+            loadData(isLoadmore = false)
+        }
+
     }
 
     override fun loadData(isLoadmore: Boolean) {
