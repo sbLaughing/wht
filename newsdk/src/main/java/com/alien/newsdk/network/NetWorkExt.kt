@@ -24,6 +24,9 @@ fun <T> Maybe<T>.async(withDelay: Long = 0): Maybe<T> =
 fun <T> Single<T>.async(withDelay: Long = 0): Single<T> =
         this.subscribeOn(Schedulers.io()).delay(withDelay, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
 
+fun <T> Observable<T>.async(withDelay: Long = 0): Observable<T> =
+        this.subscribeOn(Schedulers.io()).delay(withDelay, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread())
+
 fun <T> Maybe<out BaseHttpResponeImpl<T>>.transformDataImpl(): Maybe<T> = this.map {
     if (it.isError()) throw ApiException(it.getErroCode(), it.getErrorMsg())
     else it.getApiData()
@@ -47,10 +50,6 @@ fun <T> Maybe<T>.safeSubscribeBy(
         onSuccess: (T) -> Unit = {}
 ): Disposable = subscribe(onSuccess, onError,onComplete)
 
-fun <T> Maybe<T>.maybeSubscribeBy(
-        onError: (Throwable) -> Unit = { _ -> },
-        onComplete: () -> Unit={}
-): Disposable = subscribe({onComplete()}, onError,onComplete)
 
 
 fun <T> Single<T>.safeSubscribeBy(

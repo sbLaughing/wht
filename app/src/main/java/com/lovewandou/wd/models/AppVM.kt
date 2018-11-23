@@ -2,7 +2,6 @@ package com.lovewandou.wd.models
 
 import android.databinding.Bindable
 import com.alien.newsdk.base.BaseVM
-import com.lovewandou.wd.BR
 import com.lovewandou.wd.models.data.AccountInfo
 
 /**
@@ -17,7 +16,9 @@ class AppVM : BaseVM() {
     set(value) {
         field = value
         AppData.mCommonCache.put("accountInfo",field)
-        notifyPropertyChanged(BR.accountInfo)
+//        notifyPropertyChanged(BR.accountInfo)
+//        notifyPropertyChanged(BR.isLogin)
+        notifyChange()
     }
 
     @Bindable

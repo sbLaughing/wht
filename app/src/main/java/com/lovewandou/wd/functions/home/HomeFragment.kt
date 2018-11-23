@@ -2,7 +2,10 @@ package com.lovewandou.wd.functions.home
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.util.RxBus
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentHomeBinding
@@ -12,9 +15,11 @@ import com.lovewandou.wd.functions.profile.UserProfileFragment
 import com.lovewandou.wd.functions.search.SearchFragment
 import com.lovewandou.wd.functions.video.HomeMultiAdapter
 import com.lovewandou.wd.models.AppData
+import com.lovewandou.wd.models.RefreshHomePageEvent
 import com.waynell.videolist.visibility.calculator.SingleListViewItemActiveCalculator
 import com.waynell.videolist.visibility.scroll.RecyclerViewItemPositionGetter
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlin.math.log2
 
 /**
  * 描述:
@@ -23,11 +28,15 @@ import kotlinx.android.synthetic.main.fragment_home.*
  */
 class HomeFragment : WDFragment<FragmentHomeBinding>() {
 
+
     companion object {
+
+        val TAG = "HomeFragment"
         fun newInstance(): HomeFragment = HomeFragment()
     }
 
 
+    private var needRefresh:Boolean = false
     private var mScrollState: Int = 0
     lateinit var mAdapter: HomeMultiAdapter
     lateinit var mCalculator: SingleListViewItemActiveCalculator
@@ -86,9 +95,28 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
             loadData(isLoadmore = false)
         }
 
+        RxBus.get().tObservable(RefreshHomePageEvent::class.java)
+                .map {
+                    log2(1.0)
+                }
+                .safeSubscribeBy {
+                    if (isVisible) {
+                        Log.e(TAG,"refresh visible")
+                        loadData(isLoadmore = false)
+                    }else{
+                        Log.e(TAG,"refresh invisible")
+                        needRefresh = true
+                    }
+                }
+
     }
 
     override fun loadData(isLoadmore: Boolean) {
+        if (!AppData.appVM.isLogin && !isLoadmore){
+            mAdapter.setNewData(listOf())
+            swipe_refresh_layout.isRefreshing = false
+            return
+        }
         if (!isLoadmore) homeVM.skip = 0
         homeVM.getHomeFeed()
                 .doOnSubscribe {
@@ -98,7 +126,7 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
                     swipe_refresh_layout.isRefreshing = false
                 }
                 .handleSkipLoadmore(mAdapter,homeVM)
-                .safeSubscribeBy {
+                .autoSubscribeBy(this@HomeFragment) {
                     if (!isLoadmore){
                         mAdapter.setNewData(it.map { PostVM(it) })
                     }else{
@@ -107,14 +135,20 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
                 }
     }
 
-//    override fun onSupportVisible() {
-//        super.onSupportVisible()
-//        mCalculator.currentItem?.listItem?.onResume()
-//    }
-//
-//    override fun onSupportInvisible() {
-//        super.onSupportInvisible()
-//        mCalculator.currentItem?.listItem?.onPause()
-//    }
+
+    override fun onSupportVisible() {
+        super.onSupportVisible()
+        Log.e(TAG,"onSupportVisible")
+        mCalculator.currentItem?.listItem?.onResume()
+        if (needRefresh){
+            loadData(isLoadmore = false)
+            needRefresh = false
+        }
+    }
+
+    override fun onSupportInvisible() {
+        super.onSupportInvisible()
+        mCalculator.currentItem?.listItem?.onPause()
+    }
 
 }

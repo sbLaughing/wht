@@ -4,7 +4,9 @@ import android.databinding.ObservableField
 import com.alien.newsdk.base.BaseVM
 import com.alien.newsdk.network.async
 import com.alien.newsdk.network.transformData
+import com.alien.newsdk.util.RxBus
 import com.lovewandou.wd.models.AppData
+import com.lovewandou.wd.models.RefreshHomePageEvent
 import com.lovewandou.wd.models.data.LoginResp
 import com.lovewandou.wd.network.RequestProvider
 import io.reactivex.Maybe
@@ -25,6 +27,7 @@ class LoginVM : BaseVM() {
             accountInfo = it.user
             notifyChange()
         }
+        RxBus.get().post(RefreshHomePageEvent())
     }
 
     fun login(): Maybe<LoginResp> {

@@ -20,19 +20,23 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:stateListAnimator="@drawable/select_ele"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/search_btn"
+        android:paddingLeft="50dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/round_white"
+        android:background="@drawable/round_shadow"
         android:drawableLeft="@drawable/home_search"
+        android:paddingRight="50dp"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp"
         android:drawablePadding="12dp"
         android:gravity="center"
-        android:padding="12dp"
         android:text="查找用户并关注"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:translationZ="6dp" />
+        />
 
 </LinearLayout>

@@ -1,11 +1,11 @@
 package com.lovewandou.wd.functions.search
 
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
 import android.text.Html
-import android.text.TextWatcher
 import android.view.View
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
+import com.alien.newsdk.network.async
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
 import com.lovewandou.wd.base.WDFragment
@@ -16,8 +16,6 @@ import com.lovewandou.wd.functions.find.FindVM
 import com.lovewandou.wd.functions.profile.ProfileVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
 import com.lovewandou.wd.models.data.SearchWrapper
-import io.reactivex.processors.FlowableProcessor
-import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.fragment_search.*
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import java.util.concurrent.TimeUnit
@@ -39,7 +37,6 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
         }
     }
 
-    val flow: FlowableProcessor<String> = PublishProcessor.create<String>().toSerialized()
 
     override fun getLayoutRes(): Int = R.layout.fragment_search
 
@@ -49,7 +46,7 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
 
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = mAdapter
-        mAdapter.setOnItemClickListener { adapter, view, position ->
+        mAdapter.setOnItemClickListener { _, _, position ->
             mAdapter.getItem(position)?.let {
                 start(UserProfileFragment.newInstance(it))
             }
@@ -64,36 +61,23 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
         }
         showSoftInput(search_bar.editText)
 
-
-        search_bar.editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrEmpty()) {
-                    flow.onNext("")
-                    mAdapter.setNewData(listOf())
-                    empty_layout.visibility = View.GONE
-                } else {
-                    flow.onNext(s.toString())
-                }
-            }
-        })
-
-        flow.debounce(200, TimeUnit.MILLISECONDS)
-                .filter { it.isNotEmpty() }
-                .safeSubscribeBy {
-                    findVM.currentKey = it
-                    findVM.resetPaging()
-                    search()
+        RxTextView.textChanges(search_bar.editText)
+                .debounce(150,TimeUnit.MILLISECONDS)
+                .async()
+                .autoSubscribeBy(this@SearchFragment) {
+                    if (it.isNullOrEmpty()){
+                        mAdapter.setNewData(listOf())
+                        empty_layout.visibility = View.GONE
+                    }else{
+                        findVM.currentKey = it.toString()
+                        findVM.resetPaging()
+                        search()
+                    }
                 }
 
-        auto_attend_tv.setOnClickListener { _ ->
+        auto_attend_tv.setOnClickListener {
             findVM.autoAttend(search_bar.searchContent)
-                    .safeSubscribeBy {
+                    .autoSubscribeBy(this@SearchFragment) {
                         context?.showToast("自动关注成功")
                     }
         }
@@ -105,7 +89,7 @@ class SearchFragment : WDFragment<FragmentSearchBinding>() {
                 .map {
                     SearchWrapper(findVM.currentKey ?: "", it)
                 }
-                .safeSubscribeBy {
+                .autoSubscribeBy(this@SearchFragment) {
                     if (findVM.firstPage()) {
                         mAdapter.setNewData(it.result.map { ProfileVM(it, showAttendBtn = false) })
                         if (it.result.isEmpty()) {

@@ -6,6 +6,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId 'com.lovewandou.wd'
@@ -80,6 +89,9 @@ dependencies {
     implementation 'joda-time:joda-time:2.10'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+
+
 
 
 

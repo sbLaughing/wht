@@ -3,7 +3,7 @@ package com.lovewandou.wd.functions.find
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentFindBinding
@@ -58,7 +58,7 @@ class FindFragment : WDFragment<FragmentFindBinding>() {
         super.onLazyInitView(savedInstanceState)
 
         findVM.getTags()
-                .safeSubscribeBy {
+                .autoSubscribeBy(this@FindFragment) {
                     labelsList.clear()
                     labelsList.addAll(it)
                     mViewPagerAdapter?.notifyDataSetChanged()

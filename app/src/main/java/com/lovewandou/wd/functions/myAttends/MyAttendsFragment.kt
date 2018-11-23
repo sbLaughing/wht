@@ -1,7 +1,7 @@
 package com.lovewandou.wd.functions.myAttends
 
 import android.support.v7.widget.LinearLayoutManager
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
 import com.lovewandou.wd.base.WDFragment
@@ -49,7 +49,7 @@ class MyAttendsFragment : WDFragment<FragmentMyAttendsBinding>() {
 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             mAdapter.getItem(position)?.apply {
-                cancelAttendUser().safeSubscribeBy {
+                toggleAttend().autoSubscribeBy(this@MyAttendsFragment) {
                     mAdapter.remove(position)
                 }
             }
@@ -71,7 +71,7 @@ class MyAttendsFragment : WDFragment<FragmentMyAttendsBinding>() {
                 .doAfterTerminate {
                     swipe_refresh_layout.isRefreshing = false
                 }
-                .safeSubscribeBy { list ->
+                .autoSubscribeBy(this@MyAttendsFragment) { list ->
                     mAdapter.setNewData(list.map {
                         it.addAttend()
                         return@map ProfileVM(it)

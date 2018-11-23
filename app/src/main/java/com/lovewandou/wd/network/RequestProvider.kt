@@ -57,7 +57,6 @@ object RequestProvider {
                         return super.onAfterRequest(response, chain)
                     }
                 }
-                return null
             }
         })
     }

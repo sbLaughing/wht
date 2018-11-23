@@ -2,19 +2,20 @@ package com.lovewandou.wd.functions.profile
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.view.View
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.alien.newsdk.extensions.dp2px
-import com.alien.newsdk.extensions.safeSubscribeByNew
-import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.common.GridDecoration
 import com.lovewandou.wd.databinding.FragmentUserProfileBinding
+import com.lovewandou.wd.extension.checkLoginOnClick
 import com.lovewandou.wd.extension.handleSkipLoadmore
 import com.lovewandou.wd.functions.post.PostDetailFragment
 import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.models.data.UserPostInfo
+import com.uber.autodispose.AutoDispose
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 
 /**
@@ -39,7 +40,11 @@ class UserProfileFragment : WDFragment<FragmentUserProfileBinding>() {
                 newInstance(ProfileVM(userInfo = userPostInfo.toUserInfo()))
     }
 
-    private val profileVM by lazy { arguments?.getParcelable<ProfileVM>("data") }
+    private val profileVM by lazy {
+        arguments?.getParcelable<ProfileVM>("data")?.apply {
+            this.resetPaging()
+        }
+    }
 
     private val mAdapter = CommonAdapter<PostVM>(R.layout.item_user_posts_in_list)
 
@@ -50,11 +55,10 @@ class UserProfileFragment : WDFragment<FragmentUserProfileBinding>() {
         profileVM?.let { vm ->
             mBinding.vm = vm
 
-            attend_tv.setOnClickListener {
-                vm.toggleAttend()?.safeSubscribeByNew(owner = this@UserProfileFragment) {
-                    attend_tv.visibility = View.VISIBLE
-                    vm.notifyChange()
-                }
+            attend_tv.checkLoginOnClick(this@UserProfileFragment) {
+                vm.toggleAttend()
+                        .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this@UserProfileFragment)))
+                        .subscribe()
             }
             recycler_view.layoutManager = GridLayoutManager(context, 3)
             recycler_view.adapter = mAdapter
@@ -69,23 +73,22 @@ class UserProfileFragment : WDFragment<FragmentUserProfileBinding>() {
             mAdapter.setEnableLoadMore(true)
             mAdapter.setOnLoadMoreListener({
                 vm.getUserPosts(vm.userInfo.user_id)
-                        .handleSkipLoadmore(mAdapter,vm)
-                        .safeSubscribeBy {
+                        .handleSkipLoadmore(mAdapter, vm)
+                        .autoSubscribeBy(this@UserProfileFragment) {
                             mAdapter.addData(it.map { PostVM(it) })
                         }
             }, recycler_view)
 
 
             vm.getUserPosts(vm.userInfo.user_id)
-                    .handleSkipLoadmore(mAdapter,vm)
-                    .safeSubscribeBy {
+                    .handleSkipLoadmore(mAdapter, vm)
+                    .autoSubscribeBy(this@UserProfileFragment) {
                         mAdapter.setNewData(it.map { PostVM(it) })
                     }
 
             if (!vm.userInfo.isAttendValid()) {
                 vm.fetchUserInfo()
-                        .safeSubscribeBy {
-                        }
+                        .autoSubscribeBy(this@UserProfileFragment) {}
             }
         }
 

@@ -1,8 +1,10 @@
 package com.lovewandou.wd.models
 
 import com.alien.newsdk.util.ACache
+import com.alien.newsdk.util.RxBus
 import com.google.gson.Gson
 import com.lovewandou.wd.WDApp
+import com.lovewandou.wd.models.data.AccountInfo
 
 /**
  * 描述:
@@ -37,4 +39,10 @@ object AppData {
         ACache.get(WDApp.context,"common")
     }
 
+
+    fun onLogout(){
+        appVM.accountInfo = AccountInfo()
+        token = ""
+        RxBus.get().post(RefreshHomePageEvent())
+    }
 }

@@ -7,9 +7,9 @@ import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.alien.newsdk.BR
 import com.alien.newsdk.R
 import com.chad.library.adapter.base.BaseQuickAdapter
+
 
 /**
  * 描述:
@@ -31,7 +31,7 @@ open class BaseDataBindingAdapter<T,V:BaseDataBindingViewHolder<T>>(
     }
     override fun convert(helper: V, item: T) {
         helper.getDataBinding()?.apply {
-            setVariable(BR.item,item)
+            setVariable(com.alien.newsdk.BR.item,item)
             executePendingBindings()
             helper.onBind(data.indexOf(item),item)
         }

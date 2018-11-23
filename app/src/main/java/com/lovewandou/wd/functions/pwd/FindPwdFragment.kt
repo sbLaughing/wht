@@ -1,6 +1,6 @@
 package com.lovewandou.wd.functions.pwd
 
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentFindPwdBinding
@@ -25,13 +25,13 @@ class FindPwdFragment: WDFragment<FragmentFindPwdBinding>() {
         mBinding.vm = vm
 
         captcha_tv.setOnClickListener {
-                    vm.send().safeSubscribeBy {
+                    vm.send().autoSubscribeBy(this@FindPwdFragment) {
                         captcha_tv.start()
                     }
         }
 
         submit_tv.setOnClickListener {
-            vm.submit().safeSubscribeBy {
+            vm.submit().autoSubscribeBy(this@FindPwdFragment) {
                        context.showToast("密码重置成功")
                         pop()
                     }

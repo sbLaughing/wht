@@ -1,11 +1,10 @@
-package com.alien.ksdk.web
+package com.alien.newsdk.widget.web
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.alien.newsdk.R
 import com.alien.newsdk.util.StatusBarUtil
 import com.alien.newsdk.widget.toolbar.MToolbar
-import com.alien.newsdk.widget.web.ProgressWebView
 
 /**
  * 描述:

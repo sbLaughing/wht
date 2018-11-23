@@ -2,7 +2,7 @@ package com.lovewandou.wd.functions.login
 
 import android.app.Activity
 import android.os.Bundle
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentLoginSelectBinding
@@ -43,7 +43,7 @@ class LoginSelectFragment : WDFragment<FragmentLoginSelectBinding>() {
             (_mActivity as? MainActivity)?.mSsoHandler?.authorize(object :WbAuthListener{
                 override fun onSuccess(p0: Oauth2AccessToken) {
                     loginVM.getWeiboUserInfo(p0.token,p0.uid)
-                            .safeSubscribeBy {
+                            .autoSubscribeBy (this@LoginSelectFragment){
                                 context?.showToast("微博登录成功")
 //                                popTo(MainFragment::class.java,false)
                                 pop()

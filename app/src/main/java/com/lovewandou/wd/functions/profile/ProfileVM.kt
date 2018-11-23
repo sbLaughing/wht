@@ -6,8 +6,10 @@ import android.os.Parcelable
 import android.util.Log
 import com.alien.newsdk.network.async
 import com.alien.newsdk.network.transformData
+import com.alien.newsdk.util.RxBus
 import com.lovewandou.wd.base.BaseSkipVM
 import com.lovewandou.wd.models.AppData
+import com.lovewandou.wd.models.RefreshHomePageEvent
 import com.lovewandou.wd.models.data.BaseResponse
 import com.lovewandou.wd.models.data.UserIdReq
 import com.lovewandou.wd.models.data.UserInfo
@@ -73,14 +75,17 @@ class ProfileVM(var userInfo: UserInfo,val showAttendBtn:Boolean=true) : BaseSki
 
     fun attendUser(userid: String = userInfo.user_id): Maybe<BaseResponse> {
         return RequestProvider.userRequest.attendUser(AppData.mGson.toJson(UserIdReq(userid)))
-                .async(3000)
+                .async()
                 .transformData()
+                .doOnSuccess { RxBus.get().post(RefreshHomePageEvent()) }
+
     }
 
     fun cancelAttendUser(userid: String = userInfo.user_id): Maybe<BaseResponse> {
         return RequestProvider.userRequest.cancelAttendUser(AppData.mGson.toJson(UserIdReq(userid)))
                 .async()
                 .transformData()
+                .doOnSuccess { RxBus.get().post(RefreshHomePageEvent()) }
     }
 
     constructor(source: Parcel) : this(

@@ -2,7 +2,7 @@ package com.lovewandou.wd.functions.login
 
 import android.app.Activity
 import android.os.Bundle
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentLoginBinding
@@ -29,7 +29,7 @@ class LoginFragment : WDFragment<FragmentLoginBinding>() {
         mBinding.vm = vm
 
         login_tv.setOnClickListener {_->
-            vm.login().safeSubscribeBy {
+            vm.login().autoSubscribeBy(this@LoginFragment) {
                 setFragmentResult(Activity.RESULT_OK, Bundle())
                 pop()
             }

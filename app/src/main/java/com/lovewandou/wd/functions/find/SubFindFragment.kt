@@ -2,14 +2,16 @@ package com.lovewandou.wd.functions.find
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.alien.newsdk.network.safeSubscribeBy
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.CommonAdapter
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentSimpleListBinding
 import com.lovewandou.wd.extension.handleSkipLoadmore
+import com.lovewandou.wd.functions.login.LoginSelectFragment
 import com.lovewandou.wd.functions.profile.ProfileVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
+import com.lovewandou.wd.models.AppData
 import kotlinx.android.synthetic.main.fragment_simple_list.*
 
 /**
@@ -59,7 +61,12 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
             mAdapter.getItem(position)?.apply {
-                toggleAttend().safeSubscribeBy { }
+                if (AppData.appVM.isLogin) {
+                    toggleAttend().autoSubscribeBy(this@SubFindFragment) { }
+                }
+                else{
+                    getSupportParentFragment()?.getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
+                }
             }
         }
 
@@ -81,7 +88,7 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
             }
         }
                 .handleSkipLoadmore(mAdapter, findVm)
-                .safeSubscribeBy {
+                .autoSubscribeBy (this@SubFindFragment){
                     if (findVm.firstPage()){
                         mAdapter.setNewData(it.map { ProfileVM(it) })
                     }

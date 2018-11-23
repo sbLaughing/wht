@@ -1,8 +1,7 @@
-package com.alien.ksdk.web
+package com.alien.newsdk.widget.web
 
 import android.content.Context
 import android.content.Intent
-import com.alien.newsdk.widget.web.WebCallbackAdapter
 
 /**
  * 描述:

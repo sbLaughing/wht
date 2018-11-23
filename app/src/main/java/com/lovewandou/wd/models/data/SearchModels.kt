@@ -105,5 +105,23 @@ data class UserInfo(
 }
 
 data class UserProductsPreview(
-        val post_thumbnail:String=""
-)
+        val post_thumbnail: String = ""
+) : Parcelable {
+    constructor(source: Parcel) : this(
+            source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(post_thumbnail)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<UserProductsPreview> = object : Parcelable.Creator<UserProductsPreview> {
+            override fun createFromParcel(source: Parcel): UserProductsPreview = UserProductsPreview(source)
+            override fun newArray(size: Int): Array<UserProductsPreview?> = arrayOfNulls(size)
+        }
+    }
+}

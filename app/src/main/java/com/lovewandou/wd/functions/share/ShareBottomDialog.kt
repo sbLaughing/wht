@@ -1,12 +1,12 @@
 package com.lovewandou.wd.functions.share
 
-import android.app.Activity
 import android.net.Uri
 import android.support.design.widget.BottomSheetDialog
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.alien.newsdk.network.async
-import com.alien.newsdk.network.safeSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.functions.main.MainActivity
 import com.lovewandou.wd.functions.post.PostVM
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.dialog_share.*
  *
  * Created by and on 2018/10/18.
  */
-class ShareBottomDialog(val activity: Activity, val vm: PostVM) : BottomSheetDialog(activity, R.style.TransparentDialogStyle) {
+class ShareBottomDialog(val activity: AppCompatActivity, val vm: PostVM) : BottomSheetDialog(activity, R.style.TransparentDialogStyle) {
 
     var rootview: View;
 
@@ -61,7 +61,7 @@ class ShareBottomDialog(val activity: Activity, val vm: PostVM) : BottomSheetDia
                         dismiss()
                     }
                     .async()
-                    .safeSubscribeBy {
+                    .autoSubscribeBy(activity) {
                         (activity as? MainActivity)?.shareHandler?.shareMessage(it, true)
                     }
         }
@@ -98,7 +98,7 @@ class ShareBottomDialog(val activity: Activity, val vm: PostVM) : BottomSheetDia
                                 .doAfterTerminate {
                                     dismiss()
                                 }
-                                .safeSubscribeBy {
+                                .autoSubscribeBy(activity) {
                                     (activity as? MainActivity)?.wxApi?.sendReq(it)
                                 }
 

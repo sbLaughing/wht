@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:background="@android:color/black"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/black">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:paddingBottom="100dp"
-        android:background="@drawable/rect_share_bg"
-        android:paddingTop="24dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/rect_share_bg"
+        android:orientation="horizontal"
+        android:paddingTop="24dp"
+        android:paddingBottom="100dp">
 
-        <ImageView
-            android:padding="6dp"
-            android:layout_width="0dp"
-            android:background="@drawable/ripple_wideless"
+        <TextView
             android:id="@+id/wechat_share_tv"
-            android:src="@drawable/share_wechat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <ImageView
+            android:background="@drawable/ripple_wideless"
+            android:drawableTop="@drawable/share_wechat"
+            android:gravity="center"
             android:padding="6dp"
+            android:text="微信好友"
+            android:textColor="@color/comTextColor" />
+
+        <TextView
+            android:textColor="@color/comTextColor"
             android:id="@+id/wechat_circle_share_tv"
-            android:background="@drawable/ripple_wideless"
-
             android:layout_width="0dp"
-            android:src="@drawable/share_frid"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:padding="6dp"
-            android:layout_width="0dp"
             android:background="@drawable/ripple_wideless"
+            android:drawableTop="@drawable/share_frid"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="微信朋友圈" />
 
+        <TextView
+            android:textColor="@color/comTextColor"
             android:id="@+id/weibo_share_tv"
-            android:src="@drawable/share_weibo"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:padding="6dp"
             android:layout_width="0dp"
-            android:background="@drawable/ripple_wideless"
-
-            android:src="@drawable/share_more"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:background="@drawable/ripple_wideless"
+            android:drawableTop="@drawable/share_weibo"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="微博" />
+
+        <TextView
+            android:textColor="@color/comTextColor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_wideless"
+            android:drawableTop="@drawable/share_more"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="更多" />
     </LinearLayout>
 
 </FrameLayout>
