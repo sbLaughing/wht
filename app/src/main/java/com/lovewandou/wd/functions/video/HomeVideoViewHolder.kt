@@ -132,7 +132,7 @@ class HomeVideoViewHolder(view: View) : BasePostViewHolder(view), VideoLoadMvpVi
     }
 
     override fun videoPrepared(player: MediaPlayer?) {
-        muteVideo(true)
+        muteVideo(PostVM.GloalbalMute)
     }
 
     private fun cancelAlphaAnimate(v: View) {
@@ -149,7 +149,7 @@ class HomeVideoViewHolder(view: View) : BasePostViewHolder(view), VideoLoadMvpVi
             videoView.setVideoPath(videoPath)
             if (videoState == STATE_ACTIVED) {
                 videoView.start()
-                muteVideo(true)
+                muteVideo(PostVM.GloalbalMute)
             }
         }
     }
@@ -164,7 +164,7 @@ class HomeVideoViewHolder(view: View) : BasePostViewHolder(view), VideoLoadMvpVi
         if (videoLocalPath != null) {
             videoView.setVideoPath(videoLocalPath)
             videoView.start()
-            muteVideo(true)
+            muteVideo(PostVM.GloalbalMute)
         }
     }
 

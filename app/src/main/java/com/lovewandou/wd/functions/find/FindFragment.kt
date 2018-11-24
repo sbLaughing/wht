@@ -25,8 +25,6 @@ class FindFragment : WDFragment<FragmentFindBinding>() {
     val labelsList = mutableListOf<String>()
     val findVM = FindVM()
 
-    val mFragments = mutableMapOf<Int,SubFindFragment>()
-
     var mViewPagerAdapter: FragmentStatePagerAdapter? = null
     override fun initView() {
         setSwipeBackEnable(false)

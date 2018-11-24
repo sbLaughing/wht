@@ -42,7 +42,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
                 android:scrollbarSize="16sp"
-                android:text="@{item.userInfo.user_name}"
+                android:text="@{item.userInfo.nameFromSubFind}"
                 android:textColor="@color/comTextColor" />
 
             <TextView

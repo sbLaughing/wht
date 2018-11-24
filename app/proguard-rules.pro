@@ -25,3 +25,6 @@
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 -keep class android.support.**{*;}
+-keep class com.tencent.stat.*{*;}
+
+-keep class com.tencent.mid.*{*;}

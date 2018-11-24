@@ -14,13 +14,22 @@ import com.lovewandou.wd.models.data.UserPostInfo
  */
 class PostVM (val userPostInfo: UserPostInfo): BaseVM() ,IMultiItem{
 
+    companion object {
+        var GloalbalMute = true
+    }
+
+
+    var isExpanded = false
+
     override val itemType: Int
         get() = userPostInfo.itemType
+
 
     var isMute = true
         set(value) {
             field = value
             notifyPropertyChanged(BR.muteIcon)
+            GloalbalMute = field
         }
 
     @Bindable

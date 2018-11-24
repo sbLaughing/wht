@@ -26,10 +26,18 @@ data class SearchWrapper(val key:String,val result:List<UserInfo>)
 data class UserInfo(
         val products: List<UserProductsPreview> = listOf(),
         val user_name: String = "",
+        val user_name_zh: String = "",
+        val full_name: String = "",
         private var is_attend: Int? = 0,
         val user_id: String = "",
         val thumbnail: String = ""
 ) : Parcelable {
+
+    fun getNameFromSubFind(): String {
+        if (user_name_zh.isNullOrEmpty()) return full_name
+        else return full_name+"（${user_name_zh}）"
+    }
+
     fun isAttend(): Boolean {
         return (is_attend == 1)
     }
@@ -78,7 +86,9 @@ data class UserInfo(
     }
 
     constructor(source: Parcel) : this(
-            ArrayList<UserProductsPreview>().apply { source.readList(this, UserProductsPreview::class.java.classLoader) },
+            source.createTypedArrayList(UserProductsPreview.CREATOR),
+            source.readString(),
+            source.readString(),
             source.readString(),
             source.readValue(Int::class.java.classLoader) as Int?,
             source.readString(),
@@ -88,8 +98,10 @@ data class UserInfo(
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeList(products)
+        writeTypedList(products)
         writeString(user_name)
+        writeString(user_name_zh)
+        writeString(full_name)
         writeValue(is_attend)
         writeString(user_id)
         writeString(thumbnail)

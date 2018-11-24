@@ -10,10 +10,11 @@ import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentHomeBinding
 import com.lovewandou.wd.extension.handleSkipLoadmore
+import com.lovewandou.wd.functions.main.MainFragment
 import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
-import com.lovewandou.wd.functions.search.SearchFragment
 import com.lovewandou.wd.functions.video.HomeMultiAdapter
+import com.lovewandou.wd.functions.video.glide.GlideApp
 import com.lovewandou.wd.models.AppData
 import com.lovewandou.wd.models.RefreshHomePageEvent
 import com.waynell.videolist.visibility.calculator.SingleListViewItemActiveCalculator
@@ -48,7 +49,8 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
         setSwipeBackEnable(false)
 
         mAdapter = HomeMultiAdapter(recycler_view){
-            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(SearchFragment.newInstance())
+            (getSupportParentFragment() as? MainFragment)?.selectItem(1)
+//            getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(SearchFragment.newInstance())
         }
         val layoutManager = LinearLayoutManager(context)
 
@@ -126,12 +128,22 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
                     swipe_refresh_layout.isRefreshing = false
                 }
                 .handleSkipLoadmore(mAdapter,homeVM)
+                .doAfterSuccess {
+                    homeVM.skip = mAdapter.itemCount
+                }
                 .autoSubscribeBy(this@HomeFragment) {
                     if (!isLoadmore){
                         mAdapter.setNewData(it.map { PostVM(it) })
                     }else{
                         mAdapter.addData(it.map { PostVM(it) })
                     }
+
+                    it.map { it.post_display_image }
+                            .forEach {
+                                GlideApp.with(this@HomeFragment)
+                                        .load(it)
+                                        .preload()
+                            }
                 }
     }
 

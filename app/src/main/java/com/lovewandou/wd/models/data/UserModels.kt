@@ -15,56 +15,61 @@ class UserIdReq(
 ):BaseRequest()
 
 data class UserPostInfo(
-        val user_id: String="",
-        val thumbnail: String="",
-        val user_name: String="",
-        val full_name: String="",
-        val post_display_image: String="",
-        val post_link: String="",
-        val post_thumbnail: String="",
-        val post_video_url: String="",
-        val post_date: String="",
-        val post_id: String="",
-        val post_caption: String="",
+        val user_id: String = "",
+        val thumbnail: String = "",
+        val user_name: String = "",
+        val user_name_zh: String = "",
+        val full_name: String = "",
+        val post_display_image: String = "",
+        val post_link: String = "",
+        val post_thumbnail: String = "",
+        val post_video_url: String = "",
+        val post_date: String = "",
+        val post_id: String = "",
+        val post_caption: String = "",
         val post_is_video: Boolean = false,
 //       val _id:String=",
-        val post_caption_zh: String=""
-) : Parcelable,IMultiItem {
-
+        val post_caption_zh: String = ""
+) : Parcelable, IMultiItem {
     fun isVideo(): Boolean {
         return post_is_video
     }
+
     var isExpand = false
+
     override val itemType: Int
         get() = if (post_is_video) 1 else 0
 
-
     fun toUserInfo(): UserInfo {
-        val ret = UserInfo(thumbnail = thumbnail,user_name = user_name,user_id = user_id,is_attend = null)
+        val ret = UserInfo(thumbnail = thumbnail, user_name = user_name, user_id = user_id, is_attend = null)
         return ret
     }
 
-    fun getTimeString():String{
+    fun getTimeString(): String {
         val current = DateTime.now()
-        val target = DateTime((post_date.toLongOrNull() ?:0)*1000)
-        val diffDay = Days.daysBetween(target,current).days
-        val diffSecond = Seconds.secondsBetween(target,current).seconds
-        val diffMinute = Minutes.minutesBetween(target,current).minutes
-        val diffHour = Hours.hoursBetween(target,current).hours
-        return if (diffSecond<60){
+        val target = DateTime((post_date.toLongOrNull() ?: 0) * 1000)
+        val diffDay = Days.daysBetween(target, current).days
+        val diffSecond = Seconds.secondsBetween(target, current).seconds
+        val diffMinute = Minutes.minutesBetween(target, current).minutes
+        val diffHour = Hours.hoursBetween(target, current).hours
+        return if (diffSecond < 60) {
             "$diffSecond 秒前"
-        }else if (diffMinute<60){
+        } else if (diffMinute < 60) {
             "$diffMinute 分钟前"
-        }else if (diffHour<24){
+        } else if (diffHour < 24) {
             "$diffHour 小时前"
-        }else if (Math.abs(diffDay)<5){
+        } else {
             "$diffDay 天前"
-        }else {
-            if (current.year == target.year) target.toString("MM-dd HH:mm")
-            else target.toString("yyyy-MM-dd HH:mm")
+//        }else if (Math.abs(diffDay)<5){
+//            "$diffDay 天前"
+//        }else {
+//            if (current.year == target.year) target.toString("MM-dd HH:mm")
+//            else target.toString("yyyy-MM-dd HH:mm")
         }
     }
+
     constructor(source: Parcel) : this(
+            source.readString(),
             source.readString(),
             source.readString(),
             source.readString(),
@@ -86,6 +91,7 @@ data class UserPostInfo(
         writeString(user_id)
         writeString(thumbnail)
         writeString(user_name)
+        writeString(user_name_zh)
         writeString(full_name)
         writeString(post_display_image)
         writeString(post_link)

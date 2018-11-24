@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="ratio" format="float"/>
+    <attr name="ratio" format="float" />
     <declare-styleable name="MToolbar">
-        <attr name="mt_title" format="string"/>
-        <attr name="mt_title_center" format="boolean"/>
+        <attr name="mt_title" format="string" />
+        <attr name="mt_title_center" format="boolean" />
     </declare-styleable>
-    <attr name="MToolbarDefaultStyle" format="reference"/>
+    <attr name="MToolbarDefaultStyle" format="reference" />
 
     <declare-styleable name="MaterialEditText">
         <attr name="met_baseColor" format="color" />
@@ -29,12 +29,12 @@
         <attr name="met_hideUnderline" format="boolean" />
         <attr name="met_underlineColor" format="color" />
         <attr name="met_autoValidate" format="boolean" />
-        <attr name="met_canEmpty" format="boolean"/>
+        <attr name="met_canEmpty" format="boolean" />
         <attr name="met_inputType" format="enum">
-            <enum name="phone" value="0"/>
-            <enum name="captcha" value="1"/>
-            <enum name="password" value="2"/>
-            <enum name="other" value="99"/>
+            <enum name="phone" value="0" />
+            <enum name="captcha" value="1" />
+            <enum name="password" value="2" />
+            <enum name="other" value="99" />
         </attr>
         <attr name="met_iconLeft" format="reference" />
         <attr name="met_iconRight" format="reference" />
@@ -53,8 +53,20 @@
     </declare-styleable>
 
     <declare-styleable name="CaptchaLayout">
-        <attr name="max_time" format="integer"/>
-        <attr name="init_text" format="string"/>
-        <attr name="stringFormat" format="string"/>
+        <attr name="max_time" format="integer" />
+        <attr name="init_text" format="string" />
+        <attr name="stringFormat" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer" />
+        <attr name="animDuration" format="integer" />
+        <attr name="animAlphaStart" format="float" />
+        <attr name="expandDrawable" format="reference" />
+        <attr name="collapseDrawable" format="reference" />
+    </declare-styleable>
+    <!-- From: file:/Users/manabu/Documents/private/git/ExpandableTextView/lib/src/main/res/values/ids.xml -->
+    <eat-comment />
+    <item name="expand_collapse" type="id" />
+    <item name="expandable_text" type="id" />
 </resources>

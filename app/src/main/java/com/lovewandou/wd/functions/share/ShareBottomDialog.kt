@@ -108,7 +108,7 @@ class ShareBottomDialog(val activity: AppCompatActivity, val vm: PostVM) : Botto
                 }
     }
 
-    fun getShareVideo() =GlideApp.with(activity.applicationContext)
+    fun getShareVideo() = GlideApp.with(activity.applicationContext)
             .asFile()
             .load(vm.userPostInfo.post_video_url)
             .submit()

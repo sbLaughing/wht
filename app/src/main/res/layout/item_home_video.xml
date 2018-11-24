@@ -52,6 +52,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
+                style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"
                 android:layout_height="wrap_content"
                 android:id="@+id/more_btn"
                 android:src="@drawable/more_menu" />
@@ -122,7 +123,7 @@
         </LinearLayout>
 
 
-        <com.ms.square.android.expandabletextview.ExpandableTextView
+        <com.lovewandou.wd.widget.ExpandableTextView
             android:id="@+id/expandable_tv_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,26 +131,36 @@
             app:expandText="@{item.userPostInfo}"
             app:maxCollapsedLines="2">
 
-            <TextView
-                android:id="@id/expandable_text"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textColor="#666666"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
 
-            <ImageButton
-                android:id="@id/expand_collapse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|bottom"
-                android:background="@android:color/transparent"
-                android:padding="16dp"
-                android:text="展开" />
+                <TextView
+                    android:id="@id/expand_collapse"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="展开" />
+            </FrameLayout>
 
 
-        </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+
+
+        </com.lovewandou.wd.widget.ExpandableTextView>
 
 
     </LinearLayout>

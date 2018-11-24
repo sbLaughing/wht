@@ -23,6 +23,11 @@ android {
         versionCode 2
         versionName "0.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [
+                MTA_APPKEY:"AYGB667ZDZ4P",
+                MTA_CHANNEL:"Default"
+        ]
     }
 
     signingConfigs {
@@ -80,7 +85,7 @@ dependencies {
 
 
 
-    implementation 'com.ms-square:expandableTextView:0.1.4'
+//    implementation 'com.ms-square:expandableTextView:0.1.4'
     implementation ('com.github.bumptech.glide:okhttp3-integration:4.8.0'){
         exclude group: 'glide-parent'
     }
@@ -96,6 +101,15 @@ dependencies {
 
 
 
+
+//mta 3.4.7 稳定版
+    implementation 'com.qq.mta:mta:3.4.7-release'
+
+//mid jar包 必须添加
+    implementation 'com.tencent.mid:mid:4.06-Release'
+
+//可视化埋点的相关jar包 （根据需要添加），可视化埋点的版本号，和必须和当前MTA的版本号必须匹配使用 需要在配置文件中增加配置，具体请参考 高级功能中可视化埋点的接入。
+    implementation 'com.qq.visual:visual:3.4.0.1-beta'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'com.sina.weibo.sdk:core:4.3.4:openDefaultRelease@aar'
     implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'

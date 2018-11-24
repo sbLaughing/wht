@@ -47,6 +47,10 @@ class MainFragment : WDFragment<FragmentMainBinding>() {
         })
     }
 
+    fun selectItem(position:Int){
+        bottomBar.setCurrentItem(position)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val firstFragment = findChildFragment(HomeFragment::class.java)

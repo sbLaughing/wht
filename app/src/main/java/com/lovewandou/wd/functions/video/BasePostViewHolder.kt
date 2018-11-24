@@ -18,7 +18,10 @@ import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.profile.ProfileVM
 import com.lovewandou.wd.functions.share.ShareBottomDialog
 import com.lovewandou.wd.functions.video.glide.GlideApp
+import com.lovewandou.wd.widget.ExpandableTextView
+import com.tencent.stat.StatService
 import java.io.File
+import java.util.*
 
 /**
  * 描述:
@@ -30,10 +33,17 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
     private val downloadBtn: View = view.findViewById(R.id.download_btn)
     private val shareBtn: View = view.findViewById(R.id.share_btn)
     private val moreBtn: View = view.findViewById(R.id.more_btn)
+    private val expandLayout = view.findViewById<ExpandableTextView>(R.id.expandable_tv_layout)
 
 
     override fun onBind(position: Int, data: PostVM) {
         super.onBind(position, data)
+
+        expandLayout.setOnExpandStateChangeListener { textView, isExpanded ->
+            data.isExpanded = isExpanded
+        }
+
+        expandLayout.setCollapsed(!data.isExpanded)
 
         downloadBtn.setOnClickListener {
             (view.context as? FragmentActivity)?.rxrequestPermission("需要文件存储权限", "", Manifest.permission.WRITE_EXTERNAL_STORAGE) {
@@ -42,6 +52,9 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
                 } else {
                     onImageDownload(view,data.userPostInfo.post_display_image)
                 }
+                val p = Properties()
+                p.setProperty("name","download")
+                StatService.trackCustomKVEvent(itemView.context,"buttonclick", p)
             }
         }
 

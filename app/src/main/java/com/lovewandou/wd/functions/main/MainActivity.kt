@@ -49,7 +49,9 @@ class MainActivity : WDActivity<ActivityMainBinding>(), WbShareCallback {
             loadRootFragment(R.id.container, fragment)
         }
 
-        this.rxrequestPermission("需要文件存储权限", "", Manifest.permission.WRITE_EXTERNAL_STORAGE) {}
+        this.rxrequestPermission("需要文件存储权限", "",
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ,Manifest.permission.READ_PHONE_STATE) {}
         initWx()
     }
 

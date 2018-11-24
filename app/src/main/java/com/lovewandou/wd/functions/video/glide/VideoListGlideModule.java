@@ -17,7 +17,6 @@ import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.lovewandou.wd.R;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +40,7 @@ import okio.Source;
 @GlideModule
 public class VideoListGlideModule extends AppGlideModule {
 
-    private static OkHttpClient sClient = new OkHttpClient.Builder()
+    private static OkHttpClient sClient = HttpsUtils.getTrustAllClient()
             .addNetworkInterceptor(createInterceptor(
                     new DispatchingProgressListener())).build();
 
@@ -50,13 +49,7 @@ public class VideoListGlideModule extends AppGlideModule {
     @Override
     public void applyOptions(final Context context, GlideBuilder builder) {
         ViewTarget.setTagId(R.id.glide_loader);
-        builder.setDiskCache(new DiskLruCacheFactory(new DiskLruCacheFactory.CacheDirectoryGetter
-                () {
-            @Override
-            public File getCacheDirectory() {
-                return context.getExternalCacheDir();
-            }
-        }, DiskCache.Factory.DEFAULT_DISK_CACHE_SIZE));
+        builder.setDiskCache(new DiskLruCacheFactory(() -> context.getExternalCacheDir(), DiskCache.Factory.DEFAULT_DISK_CACHE_SIZE));
     }
 
     public static OkHttpUrlLoader getOkHttpUrlLoader() {
@@ -64,16 +57,13 @@ public class VideoListGlideModule extends AppGlideModule {
     }
 
     private static Interceptor createInterceptor(final ResponseProgressListener listener) {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                Response response = chain.proceed(request);
-                return response.newBuilder()
-                        .body(new OkHttpProgressResponseBody(request.url(), response.body(),
-                                listener))
-                        .build();
-            }
+        return chain -> {
+            Request request = chain.request();
+            Response response = chain.proceed(request);
+            return response.newBuilder()
+                    .body(new OkHttpProgressResponseBody(request.url(), response.body(),
+                            listener))
+                    .build();
         };
     }
 

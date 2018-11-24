@@ -15,7 +15,7 @@ import java.io.File
  *
  * Created by and on 2018/11/21.
  */
-val galleryPath = (Environment.getExternalStorageDirectory().absolutePath + File.separator
+val galleryPath = (Environment.getExternalStorageDirectory().absolutePath + File.separator + Environment.DIRECTORY_DCIM
         + File.separator + "Camera" + File.separator)
 
 fun File.saveVideo2Gallery(context: Context){
