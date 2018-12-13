@@ -37,13 +37,13 @@
                 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="@{item.userPostInfo.full_name}"
+                    android:text='@{item.userPostInfo.full_name+"("+item.userPostInfo.user_name_zh+")"}'
                     android:textColor="@color/comTextColor"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:textColor="@android:color/darker_gray"
-                    android:text="@{item.userPostInfo.user_name_zh}"
+                    android:text="@{item.userPostInfo.user_name}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 
@@ -113,7 +113,6 @@
             android:layout_width="match_parent"
             app:maxCollapsedLines="2"
             app:animDuration="200"
-            app:expandText="@{item.userPostInfo}"
             android:id="@+id/expandable_tv_layout"
             android:layout_height="wrap_content">
 

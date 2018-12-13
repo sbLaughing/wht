@@ -2,6 +2,7 @@ package com.lovewandou.wd.models.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.view.View
 import com.lovewandou.wd.R
 
 /**
@@ -24,7 +25,7 @@ data class TagsInfo(
 data class SearchWrapper(val key:String,val result:List<UserInfo>)
 
 data class UserInfo(
-        val products: List<UserProductsPreview> = listOf(),
+        val products: List<UserPostInfo> = listOf(),
         val user_name: String = "",
         val user_name_zh: String = "",
         val full_name: String = "",
@@ -32,10 +33,9 @@ data class UserInfo(
         val user_id: String = "",
         val thumbnail: String = ""
 ) : Parcelable {
-
     fun getNameFromSubFind(): String {
         if (user_name_zh.isNullOrEmpty()) return full_name
-        else return full_name+"（${user_name_zh}）"
+        else return full_name + "（${user_name_zh}）"
     }
 
     fun isAttend(): Boolean {
@@ -70,23 +70,38 @@ data class UserInfo(
         }
     }
 
-    fun getPreviewImage0(): String? {
+    fun getPreviewImage0(): UserPostInfo? {
         return if (products.isEmpty()) null
-        else products[0].post_thumbnail
+        else products[0]
     }
 
-    fun getPreviewImage1(): String? {
+    fun getPreviewImage1(): UserPostInfo? {
         return if (products.size < 2) null
-        else products[1].post_thumbnail
+        else products[1]
     }
 
-    fun getPreviewImage2(): String? {
+    fun getPreviewImage2(): UserPostInfo? {
         return if (products.size < 3) null
-        else products[2].post_thumbnail
+        else products[2]
+    }
+
+    fun isPreviewVideo0(): Int {
+        return if (products.isEmpty() || !products[0].isVideo()) View.GONE
+        else View.VISIBLE
+    }
+
+    fun isPreviewVideo1(): Int {
+        return if (products.size < 2 || !products[1].isVideo()) View.GONE
+        else View.VISIBLE
+    }
+
+    fun isPreviewVideo2(): Int {
+        return if (products.size < 3 || !products[2].isVideo()) View.GONE
+        else View.VISIBLE
     }
 
     constructor(source: Parcel) : this(
-            source.createTypedArrayList(UserProductsPreview.CREATOR),
+            source.createTypedArrayList(UserPostInfo.CREATOR),
             source.readString(),
             source.readString(),
             source.readString(),

@@ -5,9 +5,7 @@ import com.lovewandou.wd.models.data.TagsInfo
 import com.lovewandou.wd.models.data.UserInfo
 import com.lovewandou.wd.models.data.UserPostInfo
 import io.reactivex.Maybe
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /**
  * 描述:
@@ -29,6 +27,9 @@ interface UserRequest {
     @POST("queryLabel.do")
     fun getTags(): Maybe<List<TagsInfo>>
 
+    @POST("productInfo.do")
+    @FormUrlEncoded
+    fun getProductInfo(@Field("json")json:String):Maybe<UserPostInfo>
 
     @POST("info.do")
     @FormUrlEncoded
@@ -56,5 +57,8 @@ interface UserRequest {
     @FormUrlEncoded
     fun setAutoAttend(@Field("json")json:String):Maybe<BaseResponse>
 
+
+    @GET("share.html")
+    fun getShareUrl(@Query("post_id")postId:String):Maybe<String>
 
 }

@@ -23,9 +23,12 @@
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             app:tabIndicatorColor="@android:color/black"
+            android:textSize="12sp"
             app:tabTextColor="@android:color/darker_gray"
             app:tabSelectedTextColor="@android:color/black"
             app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayoutTextAppearance"
+            app:tabMaxWidth="70dp"
             android:id="@+id/tab_layout"
             android:layout_height="wrap_content"/>
 

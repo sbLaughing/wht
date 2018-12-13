@@ -14,6 +14,9 @@ class UserIdReq(
         val user_id:String
 ):BaseRequest()
 
+class PostIdReq(
+        val post_id:String
+):BaseRequest()
 data class UserPostInfo(
         val user_id: String = "",
         val thumbnail: String = "",
@@ -30,7 +33,16 @@ data class UserPostInfo(
         val post_is_video: Boolean = false,
 //       val _id:String=",
         val post_caption_zh: String = ""
-) : Parcelable, IMultiItem {
+) : Parcelable, IMultiItem , BaseResponse() {
+
+    fun getIntroName(): String {
+        if (user_name_zh.isNullOrEmpty()) return full_name
+        else return full_name + "（${user_name_zh}）"
+    }
+
+    fun getWeiboShareIntroName(): String {
+        return "@$full_name ${if (user_name_zh.isNullOrEmpty()) "" else "@$user_name_zh"}"
+    }
     fun isVideo(): Boolean {
         return post_is_video
     }

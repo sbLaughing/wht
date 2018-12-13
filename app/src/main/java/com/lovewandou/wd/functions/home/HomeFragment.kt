@@ -6,6 +6,7 @@ import android.util.Log
 import com.alien.newsdk.extensions.autoSubscribeBy
 import com.alien.newsdk.network.safeSubscribeBy
 import com.alien.newsdk.util.RxBus
+import com.bumptech.glide.Glide
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentHomeBinding
@@ -14,7 +15,6 @@ import com.lovewandou.wd.functions.main.MainFragment
 import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
 import com.lovewandou.wd.functions.video.HomeMultiAdapter
-import com.lovewandou.wd.functions.video.glide.GlideApp
 import com.lovewandou.wd.models.AppData
 import com.lovewandou.wd.models.RefreshHomePageEvent
 import com.waynell.videolist.visibility.calculator.SingleListViewItemActiveCalculator
@@ -103,10 +103,8 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
                 }
                 .safeSubscribeBy {
                     if (isVisible) {
-                        Log.e(TAG,"refresh visible")
                         loadData(isLoadmore = false)
                     }else{
-                        Log.e(TAG,"refresh invisible")
                         needRefresh = true
                     }
                 }
@@ -123,14 +121,12 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
         homeVM.getHomeFeed()
                 .doOnSubscribe {
                     if (!isLoadmore) swipe_refresh_layout.isRefreshing = true
+                    homeVM.skip = mAdapter.originalCount
                 }
                 .doAfterTerminate {
                     swipe_refresh_layout.isRefreshing = false
                 }
                 .handleSkipLoadmore(mAdapter,homeVM)
-                .doAfterSuccess {
-                    homeVM.skip = mAdapter.itemCount
-                }
                 .autoSubscribeBy(this@HomeFragment) {
                     if (!isLoadmore){
                         mAdapter.setNewData(it.map { PostVM(it) })
@@ -140,7 +136,7 @@ class HomeFragment : WDFragment<FragmentHomeBinding>() {
 
                     it.map { it.post_display_image }
                             .forEach {
-                                GlideApp.with(this@HomeFragment)
+                                Glide.with(this@HomeFragment)
                                         .load(it)
                                         .preload()
                             }

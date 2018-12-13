@@ -86,11 +86,7 @@ dependencies {
 
 
 //    implementation 'com.ms-square:expandableTextView:0.1.4'
-    implementation ('com.github.bumptech.glide:okhttp3-integration:4.8.0'){
-        exclude group: 'glide-parent'
-    }
-    api 'com.github.bumptech.glide:glide:4.8.0'
-    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+
     implementation 'joda-time:joda-time:2.10'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'

@@ -1,5 +1,6 @@
 package com.lovewandou.wd.functions.mine
 
+import com.afollestad.materialdialogs.MaterialDialog
 import com.alien.newsdk.widget.web.WebManager
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
@@ -7,6 +8,7 @@ import com.lovewandou.wd.databinding.FragmentMineBinding
 import com.lovewandou.wd.extension.checkLoginOnClick
 import com.lovewandou.wd.functions.login.LoginSelectFragment
 import com.lovewandou.wd.functions.myAttends.MyAttendsFragment
+import com.lovewandou.wd.functions.post.PostDetailFragment
 import com.lovewandou.wd.models.AppData
 import kotlinx.android.synthetic.main.fragment_mine.*
 
@@ -56,7 +58,14 @@ class MineFragment : WDFragment<FragmentMineBinding>() {
         }
 
         logout_tv.setOnClickListener {
-            AppData.onLogout()
+            MaterialDialog.Builder(_mActivity)
+                    .title("你确认要退出登录吗")
+                    .positiveText("确认")
+                    .negativeText("取消")
+                    .onPositive { dialog, which ->
+                        AppData.onLogout()
+                    }
+                    .show()
         }
 
     }

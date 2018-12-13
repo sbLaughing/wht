@@ -8,7 +8,8 @@ import android.view.View
 import android.widget.PopupMenu
 import com.alien.newsdk.base.BaseDataBindingViewHolder
 import com.alien.newsdk.extensions.autoSubscribeBy
-import com.alien.newsdk.extensions.saveImage2Gallery
+import com.alien.newsdk.extensions.saveGalleryAsImage
+import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.lovewandou.wd.R
@@ -17,8 +18,6 @@ import com.lovewandou.wd.extension.showToast
 import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.profile.ProfileVM
 import com.lovewandou.wd.functions.share.ShareBottomDialog
-import com.lovewandou.wd.functions.video.glide.GlideApp
-import com.lovewandou.wd.widget.ExpandableTextView
 import com.tencent.stat.StatService
 import java.io.File
 import java.util.*
@@ -28,22 +27,20 @@ import java.util.*
  *
  * Created by and on 2018/11/7.
  */
-open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM>(view) {
+open class BasePostViewHolder(val view: View,open val adapter:HomeMultiAdapter?=null) : BaseDataBindingViewHolder<PostVM>(view) {
 
     private val downloadBtn: View = view.findViewById(R.id.download_btn)
     private val shareBtn: View = view.findViewById(R.id.share_btn)
     private val moreBtn: View = view.findViewById(R.id.more_btn)
-    private val expandLayout = view.findViewById<ExpandableTextView>(R.id.expandable_tv_layout)
+    private val mVideoCover:View = view.findViewById(R.id.video_cover)
 
 
     override fun onBind(position: Int, data: PostVM) {
         super.onBind(position, data)
 
-        expandLayout.setOnExpandStateChangeListener { textView, isExpanded ->
-            data.isExpanded = isExpanded
-        }
+        mVideoCover.setOnClickListener {
 
-        expandLayout.setCollapsed(!data.isExpanded)
+        }
 
         downloadBtn.setOnClickListener {
             (view.context as? FragmentActivity)?.rxrequestPermission("需要文件存储权限", "", Manifest.permission.WRITE_EXTERNAL_STORAGE) {
@@ -72,10 +69,12 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
                 if (it.itemId==R.id.report){
                     itemView.context.showToast("举报成功")
                 }else{
-                    ProfileVM(data.userPostInfo.toUserInfo()).cancelAttendUser()
+                    ProfileVM(data.userPostInfo.toUserInfo()).cancelAttendUser(refreshFeed = adapter==null)
                             .autoSubscribeBy(itemView.context as? LifecycleOwner,onError = {
                                 itemView.context.showToast("请重试")
                             }){
+                                adapter?.remove(position)
+                                adapter?.removeRepet(data.userPostInfo.user_id)
                                 itemView.context.showToast("已拉黑")
                             }
                 }
@@ -89,13 +88,12 @@ open class BasePostViewHolder(val view: View) : BaseDataBindingViewHolder<PostVM
     }
 
     fun onImageDownload(view: View, url: String) {
-        GlideApp.with(view)
+        Glide.with(view)
                 .asFile()
                 .load(url)
                 .into(object : SimpleTarget<File>() {
                     override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                        resource.saveImage2Gallery(view.context)
-//                        MediaStore.Images.Media.insertImage(view.context.contentResolver, resource, "", "")
+                        resource.saveGalleryAsImage(view.context)
                         view.context.showToast("保存成功")
                     }
 

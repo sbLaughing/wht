@@ -3,11 +3,12 @@ package com.lovewandou.wd.functions.post
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
+import com.alien.newsdk.extensions.autoSubscribeBy
 import com.lovewandou.wd.R
 import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentPostDetailBinding
-import com.lovewandou.wd.databinding.ItemHomeBinding
 import com.lovewandou.wd.databinding.ItemHomeVideoBinding
+import com.lovewandou.wd.functions.profile.UserProfileFragment
 import com.lovewandou.wd.functions.video.BasePostViewHolder
 import com.lovewandou.wd.functions.video.HomeVideoViewHolder
 import com.lovewandou.wd.models.data.UserPostInfo
@@ -29,10 +30,22 @@ class PostDetailFragment : WDFragment<FragmentPostDetailBinding>() {
                 ret.arguments = b
                 return  ret
             }
+
+            fun newInstance(postID:String):PostDetailFragment {
+                val ret = PostDetailFragment()
+                val b = Bundle()
+                b.putString("id",postID)
+                ret.arguments = b
+                return  ret
+            }
     }
 
+    val viewmodel = PostDetailVM()
     val userPostInfo by lazy {
         arguments?.getParcelable<UserPostInfo>("data")
+    }
+    val postId by lazy {
+        arguments?.getString("id")
     }
 
     var videoViewHolder:HomeVideoViewHolder?=null
@@ -40,22 +53,44 @@ class PostDetailFragment : WDFragment<FragmentPostDetailBinding>() {
     override fun getLayoutRes(): Int = R.layout.fragment_post_detail
 
     override fun initView() {
-        userPostInfo?.let {
-            val vm = PostVM(it)
-            if (it.post_is_video){
-                val viewDataBinding = DataBindingUtil.inflate<ItemHomeVideoBinding>(LayoutInflater.from(context),R.layout.item_home_video,null,false)
-                videoViewHolder = HomeVideoViewHolder(viewDataBinding.root)
-                scroll_view.addView(videoViewHolder?.itemView)
-                viewDataBinding.item = vm
-                videoViewHolder?.onBind(0,vm)
-                videoViewHolder?.setActive(null,0)
-            }else{
-                val viewDatabinding= DataBindingUtil.inflate<ItemHomeBinding>(LayoutInflater.from(context),R.layout.item_home,null,false)
-                val imageViewHolder = BasePostViewHolder(viewDatabinding.root)
-                scroll_view.addView(imageViewHolder.itemView)
-                viewDatabinding.item = vm
-                imageViewHolder.onBind(0,vm)
+        if (userPostInfo ==null ){
+            postId?.let {
+                viewmodel.getPostDetail(it)
+                        .autoSubscribeBy(this@PostDetailFragment) {
+                            showData(it)
+                        }
             }
+        }else{
+            userPostInfo?.let {userPostInfo->
+                showData(userPostInfo)
+            }
+        }
+
+
+    }
+
+
+    fun showData(data:UserPostInfo){
+        val vm = PostVM(data)
+        vm.isExpanded = true
+
+        val viewDataBinding = DataBindingUtil.inflate<ItemHomeVideoBinding>(LayoutInflater.from(context),R.layout.item_home_video,null,false)
+        if (data.post_is_video){
+            videoViewHolder = HomeVideoViewHolder(viewDataBinding.root)
+            scroll_view.addView(videoViewHolder?.itemView)
+            viewDataBinding.item = vm
+            videoViewHolder?.onBind(0,vm)
+            videoViewHolder?.setActive(null,0)
+        }else{
+            val imageViewHolder = BasePostViewHolder(viewDataBinding.root)
+            scroll_view.addView(imageViewHolder.itemView)
+            viewDataBinding.item = vm
+            imageViewHolder.onBind(0,vm)
+        }
+
+        viewDataBinding.avatarImageview.setOnClickListener {
+            val fragment = UserProfileFragment.newInstance(data)
+            start(fragment)
         }
     }
 

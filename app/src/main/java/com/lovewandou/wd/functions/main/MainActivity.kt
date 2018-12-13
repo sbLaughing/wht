@@ -7,6 +7,7 @@ import com.lovewandou.wd.base.WDActivity
 import com.lovewandou.wd.databinding.ActivityMainBinding
 import com.lovewandou.wd.extension.rxrequestPermission
 import com.lovewandou.wd.extension.showToast
+import com.lovewandou.wd.functions.post.PostDetailFragment
 import com.sina.weibo.sdk.auth.sso.SsoHandler
 import com.sina.weibo.sdk.share.WbShareCallback
 import com.sina.weibo.sdk.share.WbShareHandler
@@ -42,6 +43,17 @@ class MainActivity : WDActivity<ActivityMainBinding>(), WbShareCallback {
 
     var wxApi:IWXAPI?=null
 
+    fun doWithIntent(intent: Intent){
+        if (intent.action == Intent.ACTION_VIEW) {
+            val uri = intent.data
+            val postId = uri.getQueryParameter("post_id")
+            if (!postId.isNullOrEmpty()){
+                findFragment(MainFragment::class.java)?.start(PostDetailFragment.newInstance(postId))
+            }
+        }
+    }
+
+
     override fun initView() {
         var fragment = findFragment(MainFragment::class.java)
         if (fragment == null) {
@@ -53,6 +65,7 @@ class MainActivity : WDActivity<ActivityMainBinding>(), WbShareCallback {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ,Manifest.permission.READ_PHONE_STATE) {}
         initWx()
+        doWithIntent(intent)
     }
 
     private fun initWx() {
@@ -73,8 +86,8 @@ class MainActivity : WDActivity<ActivityMainBinding>(), WbShareCallback {
 
     override fun getLayoutRes(): Int = R.layout.activity_main
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-
+        doWithIntent(intent)
     }
 }

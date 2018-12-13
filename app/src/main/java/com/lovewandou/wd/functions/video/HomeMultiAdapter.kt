@@ -8,6 +8,7 @@ import com.alien.newsdk.base.BaseDataBindingAdapter
 import com.alien.newsdk.base.BaseDataBindingViewHolder
 import com.chad.library.adapter.base.util.MultiTypeDelegate
 import com.lovewandou.wd.R
+import com.lovewandou.wd.functions.post.PostVM
 import com.waynell.videolist.visibility.items.ListItem
 import com.waynell.videolist.visibility.scroll.ItemsProvider
 
@@ -18,6 +19,7 @@ import com.waynell.videolist.visibility.scroll.ItemsProvider
  */
 class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit): BaseDataBindingAdapter<IMultiItem,BaseDataBindingViewHolder<IMultiItem>>(0,null),ItemsProvider {
 
+    var originalCount = 0
     val emptyLayout :View
     init {
 
@@ -25,7 +27,7 @@ class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit)
             override fun getItemType(t: IMultiItem): Int = t.itemType
         }
 
-        multiTypeDelegate.registerItemType(0, R.layout.item_home)
+        multiTypeDelegate.registerItemType(0, R.layout.item_home_video)
         multiTypeDelegate.registerItemType(1, R.layout.item_home_video)
 
         emptyLayout = LayoutInflater.from(view.context).inflate(R.layout.layout_home_empty,null)
@@ -49,6 +51,7 @@ class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit)
         if (this@HomeMultiAdapter.data.isEmpty() && (data == null || data.isEmpty()) && emptyView == null){
             emptyView = emptyLayout
         }
+        originalCount = data?.size?:0
     }
 
     override fun addData(newData: Collection<out IMultiItem>) {
@@ -56,16 +59,25 @@ class HomeMultiAdapter (val view: RecyclerView,val emptySearchCallback:()->Unit)
         if (data.isEmpty() && newData.isEmpty() && emptyView==null){
             emptyView = emptyLayout
         }
+
+        originalCount+=newData.size
+    }
+
+
+    fun removeRepet(userid:String){
+        data.removeAll {
+            (it as? PostVM)?.userPostInfo?.user_id == userid
+        }
     }
 
     override fun createBaseViewHolder(parent: ViewGroup?, layoutResId: Int): BaseDataBindingViewHolder<IMultiItem> {
         return when(layoutResId){
             R.layout.item_home->{
-                return BasePostViewHolder(getItemView(layoutResId,parent)) as BaseDataBindingViewHolder<IMultiItem>
+                return BasePostViewHolder(getItemView(layoutResId,parent),this@HomeMultiAdapter) as BaseDataBindingViewHolder<IMultiItem>
             }
 
             R.layout.item_home_video->{
-                HomeVideoViewHolder(getItemView(layoutResId,parent)) as BaseDataBindingViewHolder<IMultiItem>
+                HomeVideoViewHolder(getItemView(layoutResId,parent),this@HomeMultiAdapter) as BaseDataBindingViewHolder<IMultiItem>
             }
             else->{
                 super.createBaseViewHolder(parent, layoutResId)

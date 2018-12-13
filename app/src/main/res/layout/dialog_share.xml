@@ -53,6 +53,7 @@
             android:textColor="@color/comTextColor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/more_share_tv"
             android:layout_weight="1"
             android:background="@drawable/ripple_wideless"
             android:drawableTop="@drawable/share_more"

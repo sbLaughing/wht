@@ -77,15 +77,17 @@ class ProfileVM(var userInfo: UserInfo,val showAttendBtn:Boolean=true) : BaseSki
         return RequestProvider.userRequest.attendUser(AppData.mGson.toJson(UserIdReq(userid)))
                 .async()
                 .transformData()
-                .doOnSuccess { RxBus.get().post(RefreshHomePageEvent()) }
+                .doAfterSuccess { RxBus.get().post(RefreshHomePageEvent()) }
 
     }
 
-    fun cancelAttendUser(userid: String = userInfo.user_id): Maybe<BaseResponse> {
+    fun cancelAttendUser(userid: String = userInfo.user_id,refreshFeed:Boolean= true): Maybe<BaseResponse> {
         return RequestProvider.userRequest.cancelAttendUser(AppData.mGson.toJson(UserIdReq(userid)))
                 .async()
                 .transformData()
-                .doOnSuccess { RxBus.get().post(RefreshHomePageEvent()) }
+                .doAfterSuccess {
+                    if (refreshFeed) RxBus.get().post(RefreshHomePageEvent())
+                }
     }
 
     constructor(source: Parcel) : this(

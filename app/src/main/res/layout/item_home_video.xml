@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="item"
@@ -30,23 +32,24 @@
                 app:circleAvatar="@{item.userPostInfo.thumbnail}" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
+                android:layout_width="0dp"
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{item.userPostInfo.full_name}"
-                    android:textColor="@color/comTextColor" />
+                    android:textStyle="bold"
+                    android:text='@{item.userPostInfo.introName}'
+                    android:textColor="@color/comTextColor"
+                    android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/darker_gray"
                     android:text="@{item.userPostInfo.user_name}"
-                    android:textColor="@android:color/darker_gray" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -66,6 +69,7 @@
             <com.waynell.videolist.widget.TextureVideoView
                 android:id="@+id/video_view"
                 android:layout_width="match_parent"
+                android:visibility="@{item.userPostInfo.video?View.VISIBLE:View.GONE}"
                 android:layout_height="match_parent" />
 
             <ImageView
@@ -79,6 +83,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
+                android:visibility="@{item.userPostInfo.video?View.VISIBLE:View.GONE}"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:src="@{item.muteIcon}" />
@@ -123,44 +128,48 @@
         </LinearLayout>
 
 
-        <com.lovewandou.wd.widget.ExpandableTextView
-            android:id="@+id/expandable_tv_layout"
+        <TextView
+            android:id="@id/expandable_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:animDuration="200"
-            app:expandText="@{item.userPostInfo}"
-            app:maxCollapsedLines="2">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#666666"
+            app:postContent="@{item}"
+            android:textSize="13sp" />
+        <!--<com.lovewandou.wd.widget.ExpandableTextView-->
+            <!--android:id="@+id/expandable_tv_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:animDuration="200"-->
+            <!--app:expandText="@{item.userPostInfo}"-->
+            <!--app:maxCollapsedLines="2">-->
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@id/expandable_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:textColor="#666666"
-                    android:textSize="16sp" />
+            <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<TextView-->
+                    <!--android:id="@id/expandable_text"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:textColor="#666666"-->
+                    <!--android:textSize="16sp" />-->
 
-                <TextView
-                    android:id="@id/expand_collapse"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:background="@android:color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|bottom"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:text="展开" />
-            </FrameLayout>
-
-
-
-
-
-        </com.lovewandou.wd.widget.ExpandableTextView>
+                <!--<TextView-->
+                    <!--android:id="@id/expand_collapse"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textColor="@android:color/black"-->
+                    <!--android:background="@android:color/white"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="right|bottom"-->
+                    <!--android:paddingLeft="12dp"-->
+                    <!--android:paddingRight="12dp"-->
+                    <!--android:text="展开" />-->
+            <!--</FrameLayout>-->
+        <!--</com.lovewandou.wd.widget.ExpandableTextView>-->
 
 
     </LinearLayout>

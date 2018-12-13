@@ -9,6 +9,8 @@ import com.lovewandou.wd.base.WDFragment
 import com.lovewandou.wd.databinding.FragmentSimpleListBinding
 import com.lovewandou.wd.extension.handleSkipLoadmore
 import com.lovewandou.wd.functions.login.LoginSelectFragment
+import com.lovewandou.wd.functions.post.PostDetailFragment
+import com.lovewandou.wd.functions.post.PostVM
 import com.lovewandou.wd.functions.profile.ProfileVM
 import com.lovewandou.wd.functions.profile.UserProfileFragment
 import com.lovewandou.wd.models.AppData
@@ -32,7 +34,7 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
     val tagLabel by lazy { arguments?.getString("tag") ?: "" }
     private val mAdapter = object : CommonAdapter<ProfileVM>(R.layout.item_user_in_find) {
         override fun getClickChildIds(): Array<Int>? {
-            return arrayOf(R.id.attend_tv)
+            return arrayOf(R.id.attend_tv,R.id.image0,R.id.image0,R.id.image1,R.id.image2)
         }
     }
 
@@ -60,14 +62,35 @@ class SubFindFragment : WDFragment<FragmentSimpleListBinding>() {
         }
 
         mAdapter.setOnItemChildClickListener { adapter, view, position ->
-            mAdapter.getItem(position)?.apply {
-                if (AppData.appVM.isLogin) {
-                    toggleAttend().autoSubscribeBy(this@SubFindFragment) { }
+            when(view.id){
+                R.id.attend_tv->{
+                    mAdapter.getItem(position)?.apply {
+                        if (AppData.appVM.isLogin) {
+                            toggleAttend().autoSubscribeBy(this@SubFindFragment) { }
+                        }
+                        else{
+                            getSupportParentFragment()?.getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
+                        }
+                    }
                 }
-                else{
-                    getSupportParentFragment()?.getSupportParentFragment()?.extraTransaction()?.startDontHideSelf(LoginSelectFragment.newInstance())
+                R.id.image0->{
+                    mAdapter.getItem(position)?.userInfo?.getPreviewImage0()?.let {
+                        getSupportParentFragment()?.getSupportParentFragment()?.start(PostDetailFragment.newInstance(PostVM(it)))
+                    }
+
+                }
+                R.id.image1->{
+                    mAdapter.getItem(position)?.userInfo?.getPreviewImage1()?.let {
+                        getSupportParentFragment()?.getSupportParentFragment()?.start(PostDetailFragment.newInstance(PostVM(it)))
+                    }
+                }
+                R.id.image2->{
+                    mAdapter.getItem(position)?.userInfo?.getPreviewImage2()?.let {
+                        getSupportParentFragment()?.getSupportParentFragment()?.start(PostDetailFragment.newInstance(PostVM(it)))
+                    }
                 }
             }
+
         }
 
 

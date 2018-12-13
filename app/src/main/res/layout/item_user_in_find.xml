@@ -64,30 +64,79 @@
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <com.alien.newsdk.widget.imageview.RatioImageView
+            <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{item.userInfo.previewImage0}"
-                app:ratio="1" />
+                android:layout_height="wrap_content">
+
+                <com.alien.newsdk.widget.imageview.RatioImageView
+                    android:layout_width="match_parent"
+                    android:id="@+id/image0"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{item.userInfo.previewImage0.post_display_image}"
+                    app:thumbUrl="@{item.userInfo.previewImage0.post_thumbnail}"
+                    app:ratio="1" />
 
 
-            <com.alien.newsdk.widget.imageview.RatioImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{item.userInfo.previewImage1}" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/video_logo"
+                    android:visibility="@{item.userInfo.isPreviewVideo0()}"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
 
-            <com.alien.newsdk.widget.imageview.RatioImageView
+            <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{item.userInfo.previewImage2}" />
+                android:layout_height="wrap_content">
+
+
+                <com.alien.newsdk.widget.imageview.RatioImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:id="@+id/image1"
+                    android:layout_marginRight="2dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{item.userInfo.previewImage1.post_display_image}"
+                    app:thumbUrl="@{item.userInfo.previewImage1.post_thumbnail}" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/video_logo"
+                    android:visibility="@{item.userInfo.isPreviewVideo1()}"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+
+                <com.alien.newsdk.widget.imageview.RatioImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/image2"
+                    app:imageUrl="@{item.userInfo.previewImage2.post_display_image}"
+                    app:thumbUrl="@{item.userInfo.previewImage2.post_thumbnail}" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:visibility="@{item.userInfo.isPreviewVideo2()}"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/video_logo"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+
+
+
         </LinearLayout>
     </LinearLayout>
 </layout>
